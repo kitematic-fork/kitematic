@@ -22,7 +22,7 @@ if (!token) {
 var mixpanel = Mixpanel.init(token);
 
 if (localStorage.getItem('metrics.enabled') === null) {
-  localStorage.setItem('metrics.enabled', true);
+  localStorage.setItem('metrics.enabled', false);
 }
 
 var Metrics = {
