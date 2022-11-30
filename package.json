@@ -1,16 +1,16 @@
 {
-  "name": "Kitematic",
+  "name": "kitematic",
   "version": "0.17.13",
   "author": "Kitematic",
   "license": "Apache-2.0",
   "description": "Simple Docker Container management for Mac OS X, Windows and Ubuntu.",
-  "homepage": "https://kitematic.com/",
+  "homepage": "https://kitematic-fork.github.io/",
   "main": "browser.js",
   "repository": {
     "type": "git",
-    "url": "git@github.com:kitematic/kitematic.git"
+    "url": "git@github.com:kitematic-fork/kitematic.git"
   },
-  "bugs": "https://github.com/kitematic/kitematic/issues",
+  "bugs": "https://github.com/kitematic-fork/kitematic/issues",
   "engines": {
     "node": "<10.0.0"
   },

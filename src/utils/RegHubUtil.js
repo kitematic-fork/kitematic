@@ -75,7 +75,7 @@ module.exports = {
 
   recommended: function () {
     cachedRequest({
-      url: 'https://kitematic.com/recommended.json'
+      url: 'https://kitematic-fork.github.io/recommended.json'
     }, (error, response, body) => {
       if (error) {
         repositoryServerActions.error({error});

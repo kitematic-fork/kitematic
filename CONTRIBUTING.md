@@ -88,7 +88,7 @@ and since Kitematic has a large amount of interaction with outside systems, we'v
 Please try and label any issue as:
 - `bug`: clearly a defect or unwanted behavior (errors, performance issues)
 - `enhancement`: making an existing, working feature better (UI improvements, better integration)
-- `feature`: an entirely new feature. Please work on [roadmap features](https://github.com/kitematic/kitematic/blob/master/ROADMAP.md).
+- `feature`: an entirely new feature. Please work on [roadmap features](https://kitematic-fork.github.io/blob/master/ROADMAP.md).
 
 Before creating an issue, please:
 
@@ -133,4 +133,4 @@ We designed Kitematic to be easy to build, extend and distribute for developers.
 
 ## License
 
-By contributing your code, you agree to license your contribution under the [Apache license](https://github.com/kitematic/kitematic/blob/master/LICENSE).
+By contributing your code, you agree to license your contribution under the [Apache license](https://kitematic-fork.github.io/blob/master/LICENSE).

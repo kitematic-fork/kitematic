@@ -168,9 +168,9 @@ var ImageCard = React.createClass({
     };
     var imgsrc;
     if (this.props.image.img) {
-      imgsrc = `https://kitematic.com/recommended/${this.props.image.img}`;
+      imgsrc = `https://kitematic-fork.github.io/recommended/${this.props.image.img}`;
     } else {
-      imgsrc = 'https://kitematic.com/recommended/kitematic_html.png';
+      imgsrc = 'https://kitematic-fork.github.io/recommended/kitematic_html.png';
     }
     var tags;
     if (this.state.loading) {
