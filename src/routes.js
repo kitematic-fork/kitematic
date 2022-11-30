@@ -17,6 +17,7 @@ import About from './components/About.react';
 import Loading from './components/Loading.react';
 import NewContainerSearch from './components/NewContainerSearch.react';
 import Router from 'react-router';
+import accountActions from './actions/AccountActions';
 
 var Route = Router.Route;
 var DefaultRoute = Router.DefaultRoute;
@@ -29,6 +30,8 @@ var App = React.createClass({
     );
   }
 });
+
+accountActions.skip();
 
 var routes = (
   <Route name="app" path="/" handler={App}>
