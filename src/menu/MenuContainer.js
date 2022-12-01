@@ -7,28 +7,25 @@ import router from './../router';
 import metrics from './../utils/MetricsUtil';
 import machine from './../utils/DockerMachineUtil';
 import docker from './../utils/DockerUtil';
-import {shell} from 'electron';
+import { shell } from 'electron';
 
 
-// main.js
-class MenuContainer{
-    constructor(){
+class MenuContainer {
+    constructor() {
         this._baseMenu = [
             {
-                label: 'Kitematic',
+                label: 'File',
                 submenu: [
                     {
-                        label: 'About Kitematic',
+                        label: 'New Container',
+                        accelerator: 'CmdOrCtrl+N',
                         enabled: !!docker.host,
                         click: function () {
-                            metrics.track('Opened About', {
+                            metrics.track('Opened new container', {
                                 from: 'menu'
                             });
-                            router.get().transitionTo('about');
+                            router.get().transitionTo('search');
                         }
-                    },
-                    {
-                        type: 'separator'
                     },
                     {
                         label: 'Preferences',
@@ -44,37 +41,43 @@ class MenuContainer{
                 ]
             },
             {
-                label: 'File',
+                label: 'View',
                 submenu: [
                     {
-                        type: 'separator'
+                        label: 'Relaunch Kitematic',
+                        accelerator: 'CmdOrCtrl+r',
+                        click: function () { remote.getCurrentWindow().reload(); }
                     },
                     {
-                        label: 'Open Docker Command Line Terminal',
+                        label: 'Command Line Terminal',
                         accelerator: 'CmdOrCtrl+Shift+T',
                         enabled: !!docker.host,
-                        click: function() {
-                            metrics.track('Opened Docker Terminal', {
+                        click: function () {
+                            metrics.track('Opened Terminal', {
                                 from: 'menu'
                             });
                             machine.dockerTerminal();
                         }
-                    }
-                ]
-            },
-            {
-                label: 'View',
-                submenu: [
+                    },
                     {
-                        label: 'Toggle Chromium Developer Tools',
+                        label: 'Developer Tools',
                         accelerator: 'Alt+CmdOrCtrl+I',
-                        click: function() { remote.getCurrentWindow().toggleDevTools(); }
+                        click: function () { remote.getCurrentWindow().toggleDevTools(); }
                     }
                 ]
             },
             {
                 label: 'Help',
                 submenu: [
+                    {
+                        label: 'Online Documentation',
+                        click: function () {
+                            metrics.track('Opened Issue Reporter', {
+                                from: 'menu'
+                            });
+                            shell.openExternal('https://kitematic-fork.github.io/docs/')
+                        }
+                    },
                     {
                         label: 'Report Issue or Suggest Feedback',
                         click: function () {
@@ -83,36 +86,46 @@ class MenuContainer{
                             });
                             shell.openExternal('https://github.com/kitematic-fork/kitematic/issues/new');
                         }
+                    },
+                    {
+                        label: 'About',
+                        enabled: !!docker.host,
+                        click: function () {
+                            metrics.track('Opened About', {
+                                from: 'menu'
+                            });
+                            router.get().transitionTo('about');
+                        }
                     }
                 ]
             }
         ];
     };
-    pushMenu(menu){
+    pushMenu(menu) {
         this._baseMenu.push(menu);
     };
 
-    pushSubMenu({label, subItem}){
+    pushSubMenu({ label, subItem }) {
 
         let menu = this.findMenu(label);
         menu.submenu.push(subItem);
     };
-    findMenu(label){
-        return this._baseMenu.find(function(menuItem){
+    findMenu(label) {
+        return this._baseMenu.find(function (menuItem) {
             return menuItem.label === label;
         });
     };
-    removeMenu(menuItem){
+    removeMenu(menuItem) {
         console.log(this);
         this._baseMenu.splice(this._baseMenu.indexOf(menuItem), 1)
     };
-    static separator(){
-    return {
-        type:'separator'
+    static separator() {
+        return {
+            type: 'separator'
+        };
     };
-};
 
-    getMenu(){
+    getMenu() {
         return this._baseMenu;
     };
 }
