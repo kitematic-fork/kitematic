@@ -267,7 +267,7 @@ module.exports = React.createClass({
         </div>
       );
       results = (
-        {userImageResults}
+        <div>{userImageResults}</div>
       );
       paginateResults = null;
     } else if (this.state.loading) {
