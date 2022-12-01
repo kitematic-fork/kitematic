@@ -386,8 +386,8 @@ module.exports = React.createClass({
               <span className="results-filter results-filter-title">FILTER BY</span>
               <span className={`results-filter results-all tab ${filter === 'all' ? 'active' : ''}`} onClick={this.handleFilter.bind(this, 'all')}>All</span>
               <span className={`results-filter results-recommended tab ${filter === 'recommended' ? 'active' : ''}`} onClick={this.handleFilter.bind(this, 'recommended')}>Recommended</span>
-              <span className={`results-filter results-userrepos tab ${filter === 'userrepos' ? 'active' : ''}`} onClick={this.handleFilter.bind(this, 'userrepos')}>My Repos</span>
               <span className={`results-filter results-userimages tab ${filter === 'userimages' ? 'active' : ''}`} onClick={this.handleFilter.bind(this, 'userimages')}>My Images</span>
+              <span className={`results-filter results-userrepos tab ${filter === 'userrepos' ? 'active' : ''}`} onClick={this.handleFilter.bind(this, 'userrepos')}>My Repos</span>
             </div>
           </div>
           <div className="results">
