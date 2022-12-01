@@ -932,6 +932,12 @@ var DockerUtil = {
 
   refresh () {
     this.fetchAllContainers();
+  },
+
+  stats (name, callback) {
+    let container = this.client.getContainer(name);
+
+    container.stats(callback);
   }
 };
 
