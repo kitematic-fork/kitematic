@@ -4,7 +4,7 @@ import util from '../utils/Util';
 import docker from '../utils/DockerUtil';
 import Chart from 'chart.js';
 
-var ContainerSettingsStats = React.createClass({
+var ContainerStats = React.createClass({
   contextTypes: {
     router: React.PropTypes.func
   },
@@ -370,4 +370,4 @@ var ContainerSettingsStats = React.createClass({
   }
 });
 
-module.exports = ContainerSettingsStats;
+module.exports = ContainerStats;

@@ -12,7 +12,7 @@ import ContainerSettingsPorts from './components/ContainerSettingsPorts.react';
 import ContainerSettingsVolumes from './components/ContainerSettingsVolumes.react';
 import ContainerSettingsNetwork from './components/ContainerSettingsNetwork.react';
 import ContainerSettingsAdvanced from './components/ContainerSettingsAdvanced.react';
-import ContainerSettingsStats from './components/ContainerSettingsStats.react';
+import ContainerStats from './components/ContainerStats.react';
 import Preferences from './components/Preferences.react';
 import About from './components/About.react';
 import Loading from './components/Loading.react';
@@ -43,13 +43,13 @@ var routes = (
     <Route name="containers" path="containers" handler={Containers}>
       <Route name="container" path="details/:name" handler={ContainerDetails}>
         <DefaultRoute name="containerHome" handler={ContainerHome} />
+        <Route name="containerStats" path="stat" handler={ContainerStats}/>
         <Route name="containerSettings" path="settings" handler={ContainerSettings}>
           <Route name="containerSettingsGeneral" path="general" handler={ContainerSettingsGeneral}/>
           <Route name="containerSettingsPorts" path="ports" handler={ContainerSettingsPorts}/>
           <Route name="containerSettingsVolumes" path="volumes" handler={ContainerSettingsVolumes}/>
           <Route name="containerSettingsNetwork" path="network" handler={ContainerSettingsNetwork}/>
           <Route name="containerSettingsAdvanced" path="advanced" handler={ContainerSettingsAdvanced}/>
-          <Route name="ContainerSettingsStats" path="stat" handler={ContainerSettingsStats}/>
         </Route>
       </Route>
       <Route name="search" handler={NewContainerSearch}/>
