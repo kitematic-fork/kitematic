@@ -4,6 +4,7 @@
 import _ from 'underscore';
 import electron from 'electron';
 const remote = electron.remote;
+import { shell } from 'electron';
 
 class WindowsMenuBuilder{
     build(menuContainer){
