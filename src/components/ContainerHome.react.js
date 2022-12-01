@@ -104,7 +104,7 @@ var ContainerHome = React.createClass({
       } else {
         body = (
           <div className="details-progress">
-            <h2>Connecting to Docker Hub</h2>
+            <h2>Connecting to Container Registry</h2>
             <div className="spinner la-ball-clip-rotate la-lg la-dark"><div></div></div>
           </div>
         );

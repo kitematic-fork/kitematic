@@ -29,10 +29,10 @@ class WindowsMenuBuilder{
         //Add additional info to help menu, may be useful for OSX as well?
         menuContainer.pushSubMenu({label: 'Help', subItem: {
             label:"Online Documentation", 
-            click:()=>{shell.openExternal('https://docs.docker.com/kitematic/userguide/')}}
+            click:()=>{shell.openExternal('https://kitematic-fork.github.io/docs/')}}
         });
         menuContainer.pushSubMenu({label:'Help',subItem:{
-            label:"Online Feedback", click:()=>{shell.openExternal('https://forums.docker.com/c/open-source-projects/kitematic')}}
+            label:"Online Feedback", click:()=>{shell.openExternal('https://github.com/kitematic-fork/kitematic/issues/new')}}
         });
 
         return menuContainer;

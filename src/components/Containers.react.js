@@ -139,11 +139,11 @@ var Containers = React.createClass({
             <section className="sidebar-containers" onScroll={this.handleScroll}>
               <ContainerList containers={this.state.sorted} newContainer={this.state.newContainer} />
             </section>
-            <section className="sidebar-buttons">
+            {/* <section className="sidebar-buttons">
               <span className="btn-sidebar btn-terminal" onClick={this.handleClickDockerTerminal} ><span className="icon icon-docker-cli"></span><span className="text">DOCKER CLI</span></span>
               <span className="btn-sidebar btn-feedback" onClick={this.handleClickReportIssue} ><span className="icon icon-feedback"></span></span>
               <span className="btn-sidebar btn-preferences" onClick={this.handleClickPreferences} ><span className="icon icon-preferences"></span></span>
-            </section>
+            </section> */}
           </div>
           <Router.RouteHandler pending={this.state.pending} containers={this.state.containers} container={container}/>
         </div>

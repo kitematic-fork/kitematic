@@ -117,14 +117,7 @@ var Header = React.createClass({
       );
     }
     return (
-      <div className={headerClasses}>
-        <div className="left-header">
-          {username}
-        </div>
-        <div className="right-header">
-        {this.renderLogo()}
-        </div>
-      </div>
+      <div></div>
     );
   },
   renderBasicHeader: function () {
