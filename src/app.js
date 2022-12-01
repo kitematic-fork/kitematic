@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import electron from 'electron';
 const remote = electron.remote;
 const Menu = remote.Menu;
+import os from 'os';
 // ipcRenderer is used as we're in the process
 const ipcRenderer = electron.ipcRenderer;
 
@@ -9,7 +10,6 @@ import React from 'react';
 import Promise from 'bluebird';
 
 import metrics from './utils/MetricsUtil';
-import template from './menutemplate';
 import webUtil from './utils/WebUtil';
 import hubUtil from './utils/HubUtil';
 import setupUtil from './utils/SetupUtil';
@@ -20,6 +20,7 @@ import routes from './routes';
 import routerContainer from './router';
 import repositoryActions from './actions/RepositoryActions';
 import machine from './utils/DockerMachineUtil';
+import MenuFactory from './menu/MenuFactory';
 
 Promise.config({cancellation: true});
 
@@ -36,7 +37,6 @@ webUtil.addLiveReload();
 webUtil.addBugReporting();
 webUtil.disableGlobalBackspace();
 
-Menu.setApplicationMenu(Menu.buildFromTemplate(template()));
 
 metrics.track('Started App');
 metrics.track('app heartbeat');
@@ -53,7 +53,7 @@ routerContainer.set(router);
 
 
 setupUtil.setup().then(() => {
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template()));
+  Menu.setApplicationMenu(Menu.buildFromTemplate(MenuFactory.buildMenu(os.platform())));
   docker.init();
   if (!hub.prompted() && !hub.loggedin()) {
     router.transitionTo('login');

@@ -31,9 +31,10 @@ app.on('ready', function () {
     minHeight: os.platform() === 'win32' ? 260 : 500,
     'standard-window': false,
     resizable: true,
-    frame: false,
-    backgroundColor: '#fff',
     show: false,
+    autoHideMenuBar:true,
+    titleBarStyle: 'hidden',
+    icon:path.join(__dirname,'/../util/kitematic.ico'),
     webPreferences: {
       nodeIntegration: true,
     },
