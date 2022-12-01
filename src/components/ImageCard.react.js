@@ -13,6 +13,7 @@ import networkActions from '../actions/NetworkActions';
 import networkStore from '../stores/NetworkStore';
 import numeral from 'numeral';
 import classNames from 'classnames';
+import accountStore from '../stores/AccountStore';
 
 var ImageCard = React.createClass({
   mixins: [Router.Navigation],
@@ -22,7 +23,9 @@ var ImageCard = React.createClass({
       chosenTag: this.props.chosenTag || 'latest',
       defaultNetwork: this.props.defaultNetwork || 'bridge',
       networks: networkStore.all(),
-      searchTag: ''
+      searchTag: '',
+      username: accountStore.getState().username,
+      verified: accountStore.getState().verified
     };
   },
   componentDidMount: function () {
@@ -121,6 +124,11 @@ var ImageCard = React.createClass({
       imageActions.destroy(image.RepoTags[0].split(':')[0] + ':' + this.state.chosenTag);
     }
   },
+  handlePushImgClick: function (image) {
+    if (this.state.chosenTag) {
+      imageActions.push(image.RepoTags[0].split(':')[0] + ':' + this.state.chosenTag);
+    }
+  },
   handleRepoClick: function () {
     var repoUri = 'https://hub.docker.com/';
     if (this.props.image.namespace === 'library') {
@@ -136,6 +144,11 @@ var ImageCard = React.createClass({
 
   focusSearchTagInput: function() {
     this.refs.searchTagInput.getDOMNode().focus();
+  },
+
+  handleLoginClick: function () {
+    this.transitionTo('login');
+    metrics.track('Opened Log In Screen from local image');
   },
 
   render: function() {
@@ -248,10 +261,26 @@ var ImageCard = React.createClass({
           <div className="menu-item" onClick={this.handleTagOverlayClick.bind(this, this.props.image.name)}>
             <span className="icon icon-tag"></span><span className="text">SELECTED TAG: <span className="selected-item">{this.state.chosenTag}</span></span>
           </div>
-          <div className="remove" onClick={this.handleDeleteImgClick.bind(this, this.props.image)}>
-            <span className="btn btn-delete btn-action has-icon btn-hollow" disabled={this.props.image.inUse ? 'disabled' : null}><span className="icon icon-delete"></span>Delete Tag</span>
-          </div>
-          {this.props.image.inUse ? <p className="small">To delete, remove all containers<br/>using the above image</p> : null }
+          
+          {
+            !this.props.image.inUse ?          
+            <div className="remove" onClick={this.handleDeleteImgClick.bind(this, this.props.image)}>
+              <span className="btn btn-delete btn-action has-icon btn-hollow" disabled={this.props.image.inUse ? 'disabled' : null}>
+                <span className="icon icon-delete"></span>
+                Delete Tag
+                </span>
+            </div> : <p className="small">To delete, remove all containers<br/>using the image</p> 
+          }
+          
+          {this.state.username && this.state.verified ?
+          <div className="remove" onClick={this.handlePushImgClick.bind(this, this.props.image)}>
+            <span className="btn btn-delete btn-action has-icon btn-hollow">
+              <span className="icon icon-upload"></span>
+              Push Image
+              </span>
+          </div> : <p className="small">To push, <a onClick={this.handleLoginClick}>login</a> to your account</p>  }
+
+          
           <div className="close-overlay">
             <a className="btn btn-action circular" onClick={this.handleCloseMenuOverlay}><span className="icon icon-delete"></span></a>
           </div>

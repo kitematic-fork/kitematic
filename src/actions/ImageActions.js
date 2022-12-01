@@ -11,6 +11,10 @@ class ImageActions {
   destroy (image) {
     dockerUtil.removeImage(image);
   }
+
+  push(image) {
+    dockerUtil.push(image);
+  }
 }
 
 export default alt.createActions(ImageActions);

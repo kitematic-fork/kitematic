@@ -29,6 +29,24 @@ class ImageStore {
     this.setState({error: null});
   }
 
+  // TODO
+  pushing (stream) {
+
+    stream.setEncoding('utf8');
+      stream.on('data', json => {
+
+        debugger
+        let data = JSON.parse(json);
+
+        if (['pull', 'untag', 'tag', 'delete', 'attach'].includes(data.status)) {
+          this.refresh();
+        }
+
+        
+      });
+
+  }
+
   updated (images) {
     let tags = {};
     let finalImages = [];

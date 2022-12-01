@@ -397,6 +397,73 @@ var DockerUtil = {
     });
   },
 
+  //TODO
+  push (selectedRepoTag) {
+
+    // Prune all dangling image first
+    this.localImages.some((image) => {
+      if (image.namespace == "<none>" && image.name == "<none>") {
+        return false
+      }
+      if (image.RepoTags) {
+        image.RepoTags.map(repoTag => {
+          if (repoTag === selectedRepoTag) {
+            var image = this.client
+              .getImage(selectedRepoTag);
+
+              var opts = {
+                stream: true
+              };
+
+              let config = hubUtil.config();
+              let user = "";
+              if (hubUtil.config()) {
+                let [username, password] = hubUtil.creds(config);
+                
+                user  = username;
+
+                opts.authconfig = {
+                  auth: "",
+                  email: undefined,
+                  password: password,
+                  // serveraddress: "https://index.docker.io/v1",
+                  username: username,
+                };
+              }
+
+              var parts = image.name.split('/');
+              var last = parts[parts.length-1];
+
+              var newTag = `${user}/${last}`;
+debugger;
+              image.tag({
+                authconfig: opts.authconfig,
+                repo: newTag,
+              }, (err, data) => {
+
+                image = this.client.getImage(newTag);
+                // debugger
+
+                image.push(opts, (err, data) => {
+                  if (err) {
+                    console.error(err);
+                    imageServerActions.error(err);
+                  } else {
+                    imageServerActions.pushing(data);
+                    this.refresh();
+                  }
+                });
+
+
+              });
+
+            return true;
+          }
+        });
+      }
+    });
+  },
+
   run (name, repository, tag, network, local = false) {
     tag = tag || 'latest';
     let imageName = repository + ':' + tag;
@@ -766,6 +833,8 @@ var DockerUtil = {
   listen () {
     this.detachEvent()
     this.client.getEvents((error, stream) => {
+      // TODO
+      debugger
       if (error || !stream) {
         // TODO: Add app-wide error handler
         return;
