@@ -5,6 +5,13 @@ import path from 'path';
 import crypto from 'crypto';
 import http from 'http';
 import electron from 'electron';
+import request from 'request';
+import os from 'os';
+var cachedRequest = require('cached-request')(request);
+var cacheDirectory = os.tmpdir() + '/cachekitematic';
+cachedRequest.setCacheDirectory(cacheDirectory);
+cachedRequest.setValue('ttl', 3000);
+
 const remote = electron.remote;
 const dialog = remote.dialog;
 const app = remote.app;
@@ -212,6 +219,29 @@ module.exports = {
       });
       return false;
     }
+  },
+  promisifyRequest: function (url) {
+
+    return new Promise(function (resolve, reject) {
+
+      cachedRequest({
+        url: url
+      }, (error, response, body) => {
+
+        if (error) {
+          return reject(error)
+        }
+
+        if (response.statusCode !== 200) {
+          return reject({});
+        }
+
+        resolve(JSON.parse(body))
+
+      })
+
+    });
+
   },
   webPorts: ['80', '8000', '8080', '8888', '3000', '5000', '2368', '9200', '8983']
 };
