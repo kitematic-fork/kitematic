@@ -61,6 +61,12 @@ var ContainerDetailsSubheader = React.createClass({
       this.context.router.transitionTo('containerSettings', {name: this.context.router.getCurrentParams().name});
     }
   },
+  showStats: function () {
+    if (!this.disableTab()) {
+      metrics.track('Viewed stats');
+      this.context.router.transitionTo('containerStats', {name: this.context.router.getCurrentParams().name});
+    }
+  },
   handleRun: function () {
     if (this.props.defaultPort && !this.disableRun()) {
       metrics.track('Opened In Browser', {
@@ -142,11 +148,19 @@ var ContainerDetailsSubheader = React.createClass({
       'active': currentRoute === 'containerHome',
       disabled: this.disableTab()
     });
+
     var tabSettingsClasses = classNames({
       'details-tab': true,
       'active': currentRoutes && (currentRoutes.indexOf('containerSettings') >= 0),
       disabled: this.disableTab()
     });
+
+    var tabStatsClasses = classNames({
+      'details-tab': true,
+      'active': currentRoute === 'containerStats',
+      disabled: this.disableTab()
+    });
+
     var startStopToggle;
     if (this.disableStop()) {
       startStopToggle = (
@@ -184,6 +198,7 @@ var ContainerDetailsSubheader = React.createClass({
         <div className="details-subheader-tabs">
           <span className={tabHomeClasses} onClick={this.showHome}>Home</span>
           <span className={tabSettingsClasses} onClick={this.showSettings}>Settings</span>
+          <span className={tabStatsClasses} onClick={this.showStats}>Stats</span>
         </div>
       </div>
     );

@@ -4,7 +4,7 @@ import util from '../utils/Util';
 import docker from '../utils/DockerUtil';
 import Chart from 'chart.js';
 
-var ContainerSettingsStats = React.createClass({
+var ContainerStats = React.createClass({
   contextTypes: {
     router: React.PropTypes.func
   },
@@ -320,49 +320,53 @@ var ContainerSettingsStats = React.createClass({
     }
 
     return (
-      <div className="settings-panel stats-panel">
-        <div className="stats-charts-container stats-charts-container-horizontal">
-          <div className="stats-chart">
-            <div className="stats-chart-title">
-              CPU Usage
-            </div>
-            <canvas className="stats-chart" id="cpuChart"></canvas>
-            <div className="stats-chart-info">
-              {this.state.cpu.used.toFixed(2)} %
-            </div>
-          </div>
-          <div className="stats-chart">
-            <div className="stats-chart-title">
-              Memory Usage
-            </div>
-            <canvas className="stats-chart" id="memoryChart"></canvas>
-            <div className="stats-chart-info">
-              {(this.state.memory.used).toFixed(2)} MB
-            </div>
-          </div>
-        </div>
-        <div className="stats-charts-container stats-charts-container-vertical">
-          <div className="stats-chart">
-            <div className="stats-chart-title-composite">
-              <span className="stats-chart-title">
-                Network In
-              </span>
-              <span className="stats-chart-info">
-                {(this.state.network.in).toFixed(2)} MB/s
-              </span>
-            </div>
-            <canvas className="stats-chart" id="networkInChart"></canvas>
-          </div>
-          <div className="stats-chart">
-            <div className="stats-chart-title-composite">
-              <span className="stats-chart-title">
-                Network Out
-              </span>
-              <span className="stats-chart-info">
-                {(this.state.network.out).toFixed(2)} MB/s
-              </span>
-            </div>
-            <canvas className="stats-chart" id="networkOutChart"></canvas>
+      <div className="details-panel">
+        <div className="settings">
+            <div className="settings-panel stats-panel">
+              <div className="stats-charts-container stats-charts-container-horizontal">
+                <div className="stats-chart">
+                  <div className="stats-chart-title">
+                    CPU Usage
+                  </div>
+                  <canvas className="stats-chart" id="cpuChart"></canvas>
+                  <div className="stats-chart-info">
+                    {this.state.cpu.used.toFixed(2)} %
+                  </div>
+                </div>
+                <div className="stats-chart">
+                  <div className="stats-chart-title">
+                    Memory Usage
+                  </div>
+                  <canvas className="stats-chart" id="memoryChart"></canvas>
+                  <div className="stats-chart-info">
+                    {(this.state.memory.used).toFixed(2)} MB
+                  </div>
+                </div>
+              </div>
+              <div className="stats-charts-container stats-charts-container-vertical">
+                <div className="stats-chart">
+                  <div className="stats-chart-title-composite">
+                    <span className="stats-chart-title">
+                      Network In
+                    </span>
+                    <span className="stats-chart-info">
+                      {(this.state.network.in).toFixed(2)} MB/s
+                    </span>
+                  </div>
+                  <canvas className="stats-chart" id="networkInChart"></canvas>
+                </div>
+                <div className="stats-chart">
+                  <div className="stats-chart-title-composite">
+                    <span className="stats-chart-title">
+                      Network Out
+                    </span>
+                    <span className="stats-chart-info">
+                      {(this.state.network.out).toFixed(2)} MB/s
+                    </span>
+                  </div>
+                  <canvas className="stats-chart" id="networkOutChart"></canvas>
+                </div>
+              </div>
           </div>
         </div>
       </div>
@@ -370,4 +374,4 @@ var ContainerSettingsStats = React.createClass({
   }
 });
 
-module.exports = ContainerSettingsStats;
+module.exports = ContainerStats;
