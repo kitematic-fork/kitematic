@@ -202,7 +202,7 @@ var DockerUtil = {
         existing.remove(() => {
           this.client.createContainer(containerData, (error) => {
             if (error) {
-              console.error(err);
+              console.error(error);
               containerServerActions.error({name, error});
               return;
             }
