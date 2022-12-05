@@ -7,6 +7,7 @@ import os from 'os';
 const ipcRenderer = electron.ipcRenderer;
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Promise from 'bluebird';
 
 import metrics from './utils/MetricsUtil';
@@ -47,7 +48,7 @@ setInterval(function () {
 var router = Router.create({
   routes: routes
 });
-router.run(Handler => React.render(<Handler/>, document.body));
+router.run(Handler => ReactDOM.render(<Handler/>, document.body));
 routerContainer.set(router);
 
 
