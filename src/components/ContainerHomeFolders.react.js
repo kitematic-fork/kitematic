@@ -1,6 +1,5 @@
 import _ from 'underscore';
 import React from 'react/addons';
-import RetinaImage from 'react-retina-image';
 import path from 'path';
 import {shell} from 'electron';
 import util from '../utils/Util';
@@ -73,7 +72,7 @@ var ContainerHomeFolder = React.createClass({
       let source = m.Source;
       return (
         <div key={i} className="folder" onClick={this.handleClickFolder.bind(this, source, destination)}>
-          <RetinaImage src="folder.png" />
+          <img src="folder.png" />
           <div className="text">{destination}</div>
         </div>
       );

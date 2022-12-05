@@ -1,7 +1,6 @@
 import _ from 'underscore';
 import React from 'react/addons';
 import Router from 'react-router';
-import RetinaImage from 'react-retina-image';
 import ImageCard from './ImageCard.react';
 import Promise from 'bluebird';
 import metrics from '../utils/MetricsUtil';
@@ -223,7 +222,7 @@ module.exports = React.createClass({
       results = (
         <div className="no-results">
           <h2><Router.Link to="login">Log In</Router.Link> or <Router.Link to="signup">Sign Up</Router.Link> to access your Docker Hub repositories.</h2>
-          <RetinaImage src="connect-art.png" checkIfRetinaImgExists={false}/>
+          <img src="connect-art.png" checkIfRetinaImgExists={false}/>
         </div>
       );
       paginateResults = null;
@@ -235,7 +234,7 @@ module.exports = React.createClass({
           <div className="verify">
             <button className="btn btn-action" onClick={this.handleCheckVerification}>{'I\'ve Verified My Email Address'}</button> {spinner}
           </div>
-          <RetinaImage src="inspection.png" checkIfRetinaImgExists={false}/>
+          <img src="inspection.png" checkIfRetinaImgExists={false}/>
         </div>
       );
       paginateResults = null;

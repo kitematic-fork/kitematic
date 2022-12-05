@@ -1,6 +1,5 @@
 import React from 'react/addons';
 import Router from 'react-router';
-import RetinaImage from 'react-retina-image';
 import Header from './Header.react';
 import metrics from '../utils/MetricsUtil';
 import accountStore from '../stores/AccountStore';
@@ -59,7 +58,7 @@ module.exports = React.createClass({
         <div className="setup-content">
           {close}
           <div className="form-section">
-            <RetinaImage src={'connect-to-hub.png'} checkIfRetinaImgExists={false}/>
+            <img src={'connect-to-hub.png'} checkIfRetinaImgExists={false}/>
             <Router.RouteHandler errors={this.state.errors} loading={this.state.loading} {...this.props}/>
           </div>
           <div className="desc">

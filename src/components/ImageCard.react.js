@@ -2,7 +2,6 @@ import $ from 'jquery';
 import React from 'react/addons';
 import Router from 'react-router';
 import {shell} from 'electron';
-import RetinaImage from 'react-retina-image';
 import metrics from '../utils/MetricsUtil';
 import containerActions from '../actions/ContainerActions';
 import imageActions from '../actions/ImageActions';
@@ -13,6 +12,7 @@ import networkActions from '../actions/NetworkActions';
 import networkStore from '../stores/NetworkStore';
 import numeral from 'numeral';
 import classNames from 'classnames';
+import ReactDOM from 'react-dom';
 
 var ImageCard = React.createClass({
   mixins: [Router.Navigation],
@@ -37,7 +37,7 @@ var ImageCard = React.createClass({
     let repo = this.props.image.namespace + '/' + this.props.image.name;
     let state = tagStore.getState();
     if (this.state.tags.length && !state.tags[repo]) {
-      $(this.getDOMNode()).find('.tag-overlay').fadeOut(300);
+      $(ReactDOM.findDOMNode(this)).find('.tag-overlay').fadeOut(300);
     }
     this.setState({
       loading: tagStore.getState().loading[repo] || false,
@@ -53,7 +53,7 @@ var ImageCard = React.createClass({
     this.setState({
       chosenTag: tag
     });
-    var $tagOverlay = $(this.getDOMNode()).find('.tag-overlay');
+    var $tagOverlay = $(ReactDOM.findDOMNode(this)).find('.tag-overlay');
     $tagOverlay.fadeOut(300);
     metrics.track('Selected Image Tag');
   },
@@ -61,7 +61,7 @@ var ImageCard = React.createClass({
     this.setState({
       defaultNetwork: network
     });
-    var $networkOverlay = $(this.getDOMNode()).find('.network-overlay');
+    var $networkOverlay = $(ReactDOM.findDOMNode(this)).find('.network-overlay');
     $networkOverlay.fadeOut(300);
     metrics.track('Selected Default Network');
   },
@@ -82,15 +82,15 @@ var ImageCard = React.createClass({
     this.transitionTo('containerHome', {name});
   },
   handleMenuOverlayClick: function () {
-    let $menuOverlay = $(this.getDOMNode()).find('.menu-overlay');
+    let $menuOverlay = $(ReactDOM.findDOMNode(this)).find('.menu-overlay');
     $menuOverlay.fadeIn(300);
   },
   handleCloseMenuOverlay: function () {
-    var $menuOverlay = $(this.getDOMNode()).find('.menu-overlay');
+    var $menuOverlay = $(ReactDOM.findDOMNode(this)).find('.menu-overlay');
     $menuOverlay.fadeOut(300);
   },
   handleTagOverlayClick: function () {
-    let $tagOverlay = $(this.getDOMNode()).find('.tag-overlay');
+    let $tagOverlay = $(ReactDOM.findDOMNode(this)).find('.tag-overlay');
     $tagOverlay.fadeIn(300);
     let localImage = this.props.image.is_local || false;
     if (localImage) {
@@ -101,19 +101,19 @@ var ImageCard = React.createClass({
     this.focusSearchTagInput();
   },
   handleCloseTagOverlay: function () {
-    let $menuOverlay = $(this.getDOMNode()).find('.menu-overlay');
+    let $menuOverlay = $(ReactDOM.findDOMNode(this)).find('.menu-overlay');
     $menuOverlay.hide();
-    var $tagOverlay = $(this.getDOMNode()).find('.tag-overlay');
+    var $tagOverlay = $(ReactDOM.findDOMNode(this)).find('.tag-overlay');
     $tagOverlay.fadeOut(300);
   },
   handleNetworkOverlayClick: function () {
-    let $networkOverlay = $(this.getDOMNode()).find('.network-overlay');
+    let $networkOverlay = $(ReactDOM.findDOMNode(this)).find('.network-overlay');
     $networkOverlay.fadeIn(300);
   },
   handleCloseNetworkOverlay: function () {
-    let $menuOverlay = $(this.getDOMNode()).find('.menu-overlay');
+    let $menuOverlay = $(ReactDOM.findDOMNode(this)).find('.menu-overlay');
     $menuOverlay.hide();
-    var $networkOverlay = $(this.getDOMNode()).find('.network-overlay');
+    var $networkOverlay = $(ReactDOM.findDOMNode(this)).find('.network-overlay');
     $networkOverlay.fadeOut(300);
   },
   handleDeleteImgClick: function (image) {
@@ -174,7 +174,7 @@ var ImageCard = React.createClass({
     }
     var tags;
     if (this.state.loading) {
-      tags = <RetinaImage className="items-loading" src="loading.png"/>;
+      tags = <img className="items-loading" src="loading.png"/>;
     } else if (this.state.tags.length === 0) {
       tags = <div className="no-items">No Tags</div>;
     } else {
@@ -323,7 +323,7 @@ var ImageCard = React.createClass({
           </div>
         </div>
         <div className="logo" style={logoStyle}>
-          <RetinaImage src={imgsrc}/>
+          <img src={imgsrc}/>
         </div>
         <div className="card">
           <div className="info">
