@@ -7,6 +7,7 @@ import hubUtil from '../utils/HubUtil';
 import repositoryServerActions from '../actions/RepositoryServerActions';
 import tagServerActions from '../actions/TagServerActions';
 import os from 'os';
+let Promise = require('bluebird');
 var cachedRequest = require('cached-request')(request);
 var cacheDirectory = os.tmpdir() + '/cachekitematic';
 cachedRequest.setCacheDirectory(cacheDirectory);
@@ -74,26 +75,31 @@ module.exports = {
   },
 
   recommended: function () {
-    cachedRequest({
-      url: 'https://kitematic-fork.github.io/recommended.json'
-    }, (error, response, body) => {
-      if (error) {
-        repositoryServerActions.error({error});
-        return;
-      }
 
-      if (response.statusCode !== 200) {
-        repositoryServerActions.error({error: new Error('Could not fetch recommended repo list. Please try again later.')});
-        return;
-      }
+    let promises = [
+      'https://hub.docker.com/v2/repositories/library/?page=1&page_size=100',
+      'https://hub.docker.com/v2/repositories/library/?page=2&page_size=100'
+    ].map(util.promisifyRequest)
 
-      let data = JSON.parse(body);
-      let repos = data.repos;
+    Promise
+      .all(promises)
+      .then(function (allData) {
+
+        const result = [].concat(allData[0].results, allData[1].results);
+
+        const repos = result.map(function (repo) {
+          return {
+            name: repo.name,
+            repo: repo.namespace + '/' + repo.name,
+            // gradient_start: "#262A2D",
+            // gradient_end: "#14181C",
+            // img: "ghost.png",
+            namespace: repo.namespace
+      }
+        });
+
       async.map(repos, (repo, cb) => {
         var name = repo.repo;
-        if (util.isOfficialRepo(name)) {
-          name = 'library/' + name;
-        }
 
         cachedRequest({
           url: `${REGHUB2_ENDPOINT}/repositories/${name}`,
@@ -114,7 +120,7 @@ module.exports = {
 
         });
       }, (error, repos) => {
-        const reposData = repos.map(repo => repo.data).filter(repo => !isNullOrUndefined(repo));
+          const reposData = repos.map(repo => repo.data).filter(repo => !isNullOrUndefined(repo) && repo.description.toLowerCase().indexOf('deprecated') == -1);
 
         if (!reposData.length) {
           const errorMessage =_.chain(repos)
