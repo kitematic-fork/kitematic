@@ -5,6 +5,7 @@ import validator from 'validator';
 import accountActions from '../actions/AccountActions';
 import metrics from '../utils/MetricsUtil';
 import {shell} from 'electron';
+import ReactDOM from 'react-dom';
 
 module.exports = React.createClass({
   mixins: [Router.Navigation, React.addons.LinkedStateMixin],
@@ -18,7 +19,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    React.findDOMNode(this.refs.usernameInput).focus();
+    ReactDOM.findDOMNode(this.refs.usernameInput).focus();
   },
 
   componentWillReceiveProps: function (nextProps) {

@@ -56,6 +56,7 @@
     "parseUri": "1.2.3-2",
     "react": "0.14.0",
     "react-bootstrap": "0.20.3",
+    "react-dom": "^0.14.0",
     "react-router": "0.13.6",
     "rekcod": "^2.1.1",
     "request": "^2.88.0",
