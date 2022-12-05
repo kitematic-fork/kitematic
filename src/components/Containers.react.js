@@ -8,6 +8,7 @@ import Header from './Header.react';
 import metrics from '../utils/MetricsUtil';
 import {shell} from 'electron';
 import machine from '../utils/DockerMachineUtil';
+import ReactDOM from 'react-dom';
 
 var Containers = React.createClass({
   contextTypes: {
@@ -89,7 +90,7 @@ var Containers = React.createClass({
   },
 
   handleNewContainer: function () {
-    $(this.getDOMNode()).find('.new-container-item').parent().fadeIn();
+    $(ReactDOM.findDOMNode(this)).find('.new-container-item').parent().fadeIn();
     this.context.router.transitionTo('search');
     metrics.track('Pressed New Container');
   },

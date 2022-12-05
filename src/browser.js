@@ -32,7 +32,7 @@ app.on('ready', function () {
     'standard-window': false,
     resizable: true,
     show: false,
-    autoHideMenuBar:true,
+    // autoHideMenuBar:true,
     titleBarStyle: 'hidden',
     icon:path.join(__dirname,'/../util/kitematic.ico'),
     webPreferences: {

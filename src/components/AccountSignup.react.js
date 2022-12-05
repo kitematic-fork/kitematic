@@ -19,7 +19,7 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function () {
-    React.findDOMNode(this.refs.usernameInput).focus();
+    ReactDOM.findDOMNode(this.refs.usernameInput).focus();
   },
 
   componentWillReceiveProps: function (nextProps) {
