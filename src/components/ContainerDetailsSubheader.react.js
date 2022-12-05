@@ -1,7 +1,6 @@
 import _ from 'underscore';
 import React from 'react';
 import {shell} from 'electron';
-import metrics from '../utils/MetricsUtil';
 import ContainerUtil from '../utils/ContainerUtil';
 import classNames from 'classnames';
 import containerActions from '../actions/ContainerActions';
@@ -49,47 +48,36 @@ var ContainerDetailsSubheader = React.createClass({
   },
   showHome: function () {
     if (!this.disableTab()) {
-      metrics.track('Viewed Home', {
-        from: 'header'
-      });
       this.context.router.transitionTo('containerHome', {name: this.context.router.getCurrentParams().name});
     }
   },
   showSettings: function () {
     if (!this.disableTab()) {
-      metrics.track('Viewed Settings');
       this.context.router.transitionTo('containerSettings', {name: this.context.router.getCurrentParams().name});
     }
   },
   showStats: function () {
     if (!this.disableTab()) {
-      metrics.track('Viewed stats');
       this.context.router.transitionTo('containerStats', {name: this.context.router.getCurrentParams().name});
     }
   },
   handleRun: function () {
     if (this.props.defaultPort && !this.disableRun()) {
-      metrics.track('Opened In Browser', {
-        from: 'header'
-      });
       shell.openExternal(this.props.ports[this.props.defaultPort].url);
     }
   },
   handleRestart: function () {
     if (!this.disableRestart()) {
-      metrics.track('Restarted Container');
       containerActions.restart(this.props.container.Name);
     }
   },
   handleStop: function () {
     if (!this.disableStop()) {
-      metrics.track('Stopped Container');
       containerActions.stop(this.props.container.Name);
     }
   },
   handleStart: function () {
     if (!this.disableStart()) {
-      metrics.track('Started Container');
       containerActions.start(this.props.container.Name);
     }
   },
@@ -105,7 +93,6 @@ var ContainerDetailsSubheader = React.createClass({
   },
   handleTerminal: function () {
     if (!this.disableTerminal()) {
-      metrics.track('Terminaled Into Container');
       var container = this.props.container;
       var shell = ContainerUtil.env(container).reduce((envs, env) => {
         envs[env[0]] = env[1];

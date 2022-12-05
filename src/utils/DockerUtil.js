@@ -7,7 +7,6 @@ import http from 'http';
 import child_process from 'child_process';
 import util from './Util';
 import hubUtil from './HubUtil';
-import metrics from '../utils/MetricsUtil';
 import containerServerActions from '../actions/ContainerServerActions';
 import imageServerActions from '../actions/ImageServerActions';
 import networkActions from '../actions/NetworkActions';
@@ -206,7 +205,6 @@ var DockerUtil = {
               containerServerActions.error({name, error});
               return;
             }
-            metrics.track('Container Finished Creating');
             this.addOrRemoveNetworks(name, networks, true).finally(() => {
               this.startContainer(name);
               delete this.placeholders[name];

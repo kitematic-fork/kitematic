@@ -4,7 +4,6 @@ import {shell} from 'electron';
 import ContainerUtil from '../utils/ContainerUtil';
 import containerActions from '../actions/ContainerActions';
 import containerStore from '../stores/ContainerStore';
-import metrics from '../utils/MetricsUtil';
 import docker from '../utils/DockerUtil';
 import {webPorts} from '../utils/Util';
 import {DropdownButton, MenuItem} from 'react-bootstrap';
@@ -30,9 +29,6 @@ var ContainerSettingsPorts = React.createClass({
     };
   },
   handleViewLink: function (url) {
-    metrics.track('Opened In Browser', {
-      from: 'settings'
-    });
     shell.openExternal('http://' + url);
   },
   createEmptyPort: function (ports) {
@@ -71,7 +67,6 @@ var ContainerSettingsPorts = React.createClass({
   handleAddPort: function (e) {
     var ports = this.addPort();
     this.setState({ports: ports});
-    metrics.track('Added Pending Port');
   },
   checkPort: function (ports, port, key) {
     // basic validation, if number is integer, if its in range, if there

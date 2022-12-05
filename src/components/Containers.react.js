@@ -5,7 +5,6 @@ import Router from 'react-router';
 import containerStore from '../stores/ContainerStore';
 import ContainerList from './ContainerList.react';
 import Header from './Header.react';
-import metrics from '../utils/MetricsUtil';
 import {shell} from 'electron';
 import machine from '../utils/DockerMachineUtil';
 import ReactDOM from 'react-dom';
@@ -92,27 +91,17 @@ var Containers = React.createClass({
   handleNewContainer: function () {
     $(ReactDOM.findDOMNode(this)).find('.new-container-item').parent().fadeIn();
     this.context.router.transitionTo('search');
-    metrics.track('Pressed New Container');
   },
 
   handleClickPreferences: function () {
-    metrics.track('Opened Preferences', {
-      from: 'app'
-    });
     this.context.router.transitionTo('preferences');
   },
 
   handleClickDockerTerminal: function () {
-    metrics.track('Opened Docker Terminal', {
-      from: 'app'
-    });
     machine.dockerTerminal();
   },
 
   handleClickReportIssue: function () {
-    metrics.track('Opened Issue Reporter', {
-      from: 'app'
-    });
     
     shell.openExternal('https://github.com/kitematic-fork/kitematic');
   },

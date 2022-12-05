@@ -10,7 +10,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Promise from 'bluebird';
 
-import metrics from './utils/MetricsUtil';
 import webUtil from './utils/WebUtil';
 import hubUtil from './utils/HubUtil';
 import setupUtil from './utils/SetupUtil';
@@ -35,15 +34,8 @@ repositoryActions.recommended();
 
 webUtil.addWindowSizeSaving();
 webUtil.addLiveReload();
-webUtil.addBugReporting();
 webUtil.disableGlobalBackspace();
 
-
-metrics.track('Started App');
-metrics.track('app heartbeat');
-setInterval(function () {
-  metrics.track('app heartbeat');
-}, 14400000);
 
 var router = Router.create({
   routes: routes
@@ -62,10 +54,6 @@ setupUtil.setup().then(() => {
     router.transitionTo('search');
   }
 }).catch(err => {
-  metrics.track('Setup Failed', {
-    step: 'catch',
-    message: err.message
-  });
   throw err;
 });
 

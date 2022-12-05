@@ -2,11 +2,9 @@ import _ from 'underscore';
 import fs from 'fs';
 import path from 'path';
 import Promise from 'bluebird';
-import bugsnag from 'bugsnag-js';
 import util from './Util';
 import virtualBox from './VirtualBoxUtil';
 import setupServerActions from '../actions/SetupServerActions';
-import metrics from './MetricsUtil';
 import machine from './DockerMachineUtil';
 import docker from './DockerUtil';
 import router from '../router';
@@ -37,7 +35,6 @@ export default {
   },
 
   async useVbox () {
-    metrics.track('Retried Setup with VBox');
     router.get().transitionTo('loading');
     util.native = false;
     localStorage.setItem('settings.useVM', true);
@@ -46,9 +43,6 @@ export default {
   },
 
   retry (removeVM) {
-    metrics.track('Retried Setup', {
-      removeVM
-    });
 
     router.get().transitionTo('loading');
     setupServerActions.error({ error: { message: null }});
@@ -76,10 +70,9 @@ export default {
         }
         return;
       } catch (error) {
-        metrics.track('Native Setup Failed');
         setupServerActions.error({error});
 
-        bugsnag.notify('Native Setup Failed', error.message, {
+        console.error('Native Setup Failed', error.message, {
           'Docker Error': error.message
         }, 'info');
         this.clearTimers();
@@ -95,7 +88,6 @@ export default {
         docker.setup('localhost');
         setupServerActions.started({started: true});
         this.simulateProgress(5);
-        metrics.track('Native Setup Finished');
         return docker.version();
       } catch (error) {
         throw new Error(error);
@@ -129,10 +121,6 @@ export default {
         machineVersion = await machine.version();
 
         setupServerActions.started({started: true});
-        metrics.track('Started Setup', {
-          virtualBoxVersion,
-          machineVersion
-        });
         let exists
         if (process.env.MACHINE_STORAGE_PATH) {
           exists = await virtualBox.vmExists(machine.name()) && fs.existsSync(path.join(process.env.MACHINE_STORAGE_PATH, 'machines', machine.name()));
@@ -186,22 +174,11 @@ export default {
       } catch (error) {
         router.get().transitionTo('setup');
 
-        if (error.code === precreateCheckExitCode) {
-          metrics.track('Setup Halted', {
-            virtualBoxVersion,
-            machineVersion
-          });
-        } else {
-          metrics.track('Setup Failed', {
-            virtualBoxVersion,
-            machineVersion
-          });
-        }
 
         let message = error.message.split('\n');
         let lastLine = message.length > 1 ? message[message.length - 2] : 'Docker Machine encountered an error.';
         let virtualBoxLogs = machine.virtualBoxLogs();
-        bugsnag.notify('Setup Failed', lastLine, {
+        console.error('Setup Failed', lastLine, {
           'Docker Machine Logs': error.message,
           'VirtualBox Logs': virtualBoxLogs,
           'VirtualBox Version': virtualBoxVersion,
@@ -215,9 +192,6 @@ export default {
         await this.pause();
       }
     }
-    metrics.track('Setup Finished', {
-      virtualBoxVersion,
-      machineVersion
-    });
+
   }
 };

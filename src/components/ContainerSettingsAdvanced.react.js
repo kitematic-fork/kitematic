@@ -1,6 +1,5 @@
 import _ from 'underscore';
 import React from 'react/addons';
-import metrics from '../utils/MetricsUtil';
 import ContainerUtil from '../utils/ContainerUtil';
 import containerActions from '../actions/ContainerActions';
 
@@ -22,7 +21,6 @@ var ContainerSettingsAdvanced = React.createClass({
   },
 
   handleSaveAdvancedOptions: function () {
-    metrics.track('Saved Advanced Options');
     let tty = this.state.tty;
     let openStdin = this.state.openStdin;
     let privileged = this.state.privileged;

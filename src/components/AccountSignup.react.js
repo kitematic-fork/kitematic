@@ -3,7 +3,6 @@ import React from 'react/addons';
 import Router from 'react-router';
 import validator from 'validator';
 import accountActions from '../actions/AccountActions';
-import metrics from '../utils/MetricsUtil';
 
 module.exports = React.createClass({
   mixins: [Router.Navigation, React.addons.LinkedStateMixin],
@@ -52,14 +51,12 @@ module.exports = React.createClass({
 
     if (_.isEmpty(errors)) {
       accountActions.signup(this.state.username, this.state.password, this.state.email, this.state.subscribe);
-      metrics.track('Clicked Sign Up');
     }
   },
 
   handleClickLogin: function () {
     if (!this.props.loading) {
       this.replaceWith('login');
-      metrics.track('Switched to Log In');
     }
   },
 

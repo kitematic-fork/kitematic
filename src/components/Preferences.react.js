@@ -1,5 +1,4 @@
 import React from 'react/addons';
-import metrics from '../utils/MetricsUtil';
 import Router from 'react-router';
 import util from '../utils/Util';
 import electron from 'electron';
@@ -28,7 +27,6 @@ var Preferences = React.createClass({
     return {
       closeVMOnQuit: localStorage.getItem('settings.closeVMOnQuit') === 'true',
       useVM: localStorage.getItem('settings.useVM') === 'true',
-      metricsEnabled: metrics.enabled(),
       terminalShell: localStorage.getItem('settings.terminalShell') || "sh",
       terminalPath: localStorage.getItem('settings.terminalPath') || "/usr/bin/xterm",
       startLinkedContainers: localStorage.getItem('settings.startLinkedContainers') === 'true',
@@ -37,7 +35,6 @@ var Preferences = React.createClass({
   },
   handleGoBackClick: function () {
     this.goBack();
-    metrics.track('Went Back From Preferences');
   },
   handleChangeCloseVMOnQuit: function (e) {
     var checked = e.target.checked;
@@ -45,9 +42,6 @@ var Preferences = React.createClass({
       closeVMOnQuit: checked
     });
     localStorage.setItem('settings.closeVMOnQuit', checked);
-    metrics.track('Toggled Close VM On Quit', {
-      close: checked
-    });
   },
   handleChangeUseVM: function (e) {
     var checked = e.target.checked;
@@ -56,19 +50,6 @@ var Preferences = React.createClass({
     });
     localStorage.setItem('settings.useVM', checked);
     util.isNative();
-    metrics.track('Toggled VM or Native setting', {
-      vm: checked
-    });
-  },
-  handleChangeMetricsEnabled: function (e) {
-    var checked = e.target.checked;
-    this.setState({
-      metricsEnabled: checked
-    });
-    metrics.setEnabled(checked);
-    metrics.track('Toggled util/MetricsUtil', {
-      enabled: checked
-    });
   },
   handleChangeTerminalShell: function (e) {
     var value = e.target.value;
@@ -165,14 +146,6 @@ var Preferences = React.createClass({
           <a onClick={this.handleGoBackClick}>Go Back</a>
           {vmSettings}
           <div className="title">App Settings</div>
-          <div className="option">
-            <div className="option-name">
-              <label htmlFor="metricsEnabled">Report anonymous usage analytics</label>
-            </div>
-            <div className="option-value">
-              <input id="metricsEnabled" type="checkbox" checked={this.state.metricsEnabled} onChange={this.handleChangeMetricsEnabled}/>
-            </div>
-          </div>
           <div className="option">
             <div className="option-name">
               <label htmlFor="terminalShell">Exec command shell</label>

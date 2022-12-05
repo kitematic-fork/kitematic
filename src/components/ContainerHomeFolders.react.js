@@ -3,7 +3,6 @@ import React from 'react/addons';
 import path from 'path';
 import {shell} from 'electron';
 import util from '../utils/Util';
-import metrics from '../utils/MetricsUtil';
 import containerActions from '../actions/ContainerActions';
 import electron from 'electron';
 const remote = electron.remote;
@@ -15,9 +14,6 @@ var ContainerHomeFolder = React.createClass({
     router: React.PropTypes.func
   },
   handleClickFolder: function (source, destination) {
-    metrics.track('Opened Volume Directory', {
-      from: 'home'
-    });
 
     if (source.indexOf(util.windowsToLinuxPath(util.home())) === -1) {
       dialog.showMessageBox({
@@ -57,9 +53,6 @@ var ContainerHomeFolder = React.createClass({
     }
   },
   handleClickChangeFolders: function () {
-    metrics.track('Viewed Volume Settings', {
-      from: 'preview'
-    });
     this.context.router.transitionTo('containerSettingsVolumes', {name: this.context.router.getCurrentParams().name});
   },
   render: function () {

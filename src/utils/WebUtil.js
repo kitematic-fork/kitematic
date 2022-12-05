@@ -4,8 +4,6 @@ const app = remote.app;
 import fs from 'fs';
 import util from './Util';
 import path from 'path';
-import bugsnag from 'bugsnag-js';
-import metrics from './MetricsUtil';
 
 var WebUtil = {
   addWindowSizeSaving: function () {
@@ -23,35 +21,6 @@ var WebUtil = {
       script.type = 'text/javascript';
       script.src = 'http://localhost:35729/livereload.js';
       head.appendChild(script);
-    }
-  },
-  addBugReporting: function () {
-    var settingsjson = util.settingsjson();
-
-    if (settingsjson.bugsnag) {
-      bugsnag.apiKey = settingsjson.bugsnag;
-      bugsnag.autoNotify = true;
-      bugsnag.releaseStage = process.env.NODE_ENV === 'development' ? 'development' : 'production';
-      bugsnag.notifyReleaseStages = ['production'];
-      bugsnag.appVersion = app.getVersion();
-
-      bugsnag.beforeNotify = function(payload) {
-        if (!metrics.enabled()) {
-          return false;
-        }
-
-        payload.stacktrace = util.removeSensitiveData(payload.stacktrace);
-        payload.context = util.removeSensitiveData(payload.context);
-        payload.file = util.removeSensitiveData(payload.file);
-        payload.message = util.removeSensitiveData(payload.message);
-        payload.url = util.removeSensitiveData(payload.url);
-        payload.name = util.removeSensitiveData(payload.name);
-        payload.file = util.removeSensitiveData(payload.file);
-
-        for(var key in payload.metaData) {
-          payload.metaData[key] = util.removeSensitiveData(payload.metaData[key]);
-        }
-      };
     }
   },
   disableGlobalBackspace: function () {

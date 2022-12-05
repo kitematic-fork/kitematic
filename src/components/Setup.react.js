@@ -3,7 +3,6 @@ import Router from 'react-router';
 import Radial from './Radial.react.js';
 import Header from './Header.react';
 import util from '../utils/Util';
-import metrics from '../utils/MetricsUtil';
 import setupStore from '../stores/SetupStore';
 import setupActions from '../actions/SetupActions';
 import {shell} from 'electron';
@@ -42,24 +41,15 @@ var Setup = React.createClass({
   },
 
   handleResetSettings: function () {
-    metrics.track('Settings reset', {
-      from: 'setup'
-    });
     localStorage.removeItem('settings.useVM');
     setupActions.retry(false);
   },
 
   handleToolBox: function () {
-    metrics.track('Getting toolbox', {
-      from: 'setup'
-    });
     shell.openExternal('https://www.docker.com/docker-toolbox');
   },
 
   handleLinuxDockerInstall: function () {
-    metrics.track('Opening Linux Docker installation instructions', {
-      from: 'setup'
-    });
     shell.openExternal('http://docs.docker.com/linux/started/');
   },
 

@@ -3,7 +3,6 @@ import React from 'react/addons';
 import Router from 'react-router';
 import ImageCard from './ImageCard.react';
 import Promise from 'bluebird';
-import metrics from '../utils/MetricsUtil';
 import classNames from 'classnames';
 import repositoryActions from '../actions/RepositoryActions';
 import repositoryStore from '../stores/RepositoryStore';
@@ -95,7 +94,6 @@ module.exports = React.createClass({
     });
 
     _searchPromise = Promise.delay(200).then(() => {
-      metrics.track('Searched for Images');
       _searchPromise = null;
       repositoryActions.search(query, page);
     }).catch(Promise.CancellationError, () => {});
@@ -130,15 +128,9 @@ module.exports = React.createClass({
 
     this.transitionTo('search', {}, {filter: filter});
 
-    metrics.track('Filtered Results', {
-      filter: filter
-    });
   },
   handleCheckVerification: function () {
     accountActions.verify();
-    metrics.track('Verified Account', {
-      from: 'search'
-    });
   },
   render: function () {
     let filter = this.getQuery().filter || 'all';

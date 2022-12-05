@@ -1,6 +1,5 @@
 import React from 'react/addons';
 import util from '../utils/Util';
-import metrics from '../utils/MetricsUtil';
 import electron from 'electron';
 const remote = electron.remote;
 const Menu = remote.Menu;
@@ -54,16 +53,11 @@ var Header = React.createClass({
   },
   handleLoginClick: function () {
     this.transitionTo('login');
-    metrics.track('Opened Log In Screen');
   },
   handleLogoutClick: function () {
-    metrics.track('Logged Out');
     accountActions.logout();
   },
   handleVerifyClick: function () {
-    metrics.track('Verified Account', {
-      from: 'header'
-    });
     accountActions.verify();
   },
   renderLogo: function () {

@@ -1,7 +1,6 @@
 import React from 'react/addons';
 import Router from 'react-router';
 import Header from './Header.react';
-import metrics from '../utils/MetricsUtil';
 import accountStore from '../stores/AccountStore';
 import accountActions from '../actions/AccountActions';
 
@@ -35,12 +34,10 @@ module.exports = React.createClass({
   handleSkip: function () {
     accountActions.skip();
     this.transitionTo('search');
-    metrics.track('Skipped Login');
   },
 
   handleClose: function () {
     this.goBack();
-    metrics.track('Closed Login');
   },
 
   update: function () {

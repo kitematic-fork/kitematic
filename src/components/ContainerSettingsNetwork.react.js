@@ -1,6 +1,5 @@
 import _ from 'underscore';
 import React from 'react/addons';
-import metrics from '../utils/MetricsUtil';
 import docker from '../utils/DockerUtil';
 import containerActions from '../actions/ContainerActions';
 import networkStore from '../stores/NetworkStore';
@@ -62,7 +61,6 @@ var ContainerSettingsNetwork = React.createClass({
   },
 
   handleSaveNetworkOptions: function () {
-    metrics.track('Saved Network Options');
     let connectedNetworks = [];
     let disconnectedNetworks = [];
     let containerNetworks = this.props.container.NetworkSettings.Networks;

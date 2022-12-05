@@ -5,7 +5,6 @@ const remote = electron.remote;
 const dialog = remote.dialog;
 import {shell} from 'electron';
 import util from '../utils/Util';
-import metrics from '../utils/MetricsUtil';
 import containerActions from '../actions/ContainerActions';
 
 var ContainerSettingsVolumes = React.createClass({
@@ -48,7 +47,6 @@ var ContainerSettingsVolumes = React.createClass({
         return;
       }
 
-      metrics.track('Choose Directory for Volume');
 
       let mounts = _.clone(this.state.mounts);
       _.each(mounts, m => {
@@ -65,9 +63,6 @@ var ContainerSettingsVolumes = React.createClass({
     });
   },
   handleRemoveVolumeClick: function (dockerVol) {
-    metrics.track('Removed Volume Directory', {
-      from: 'settings'
-    });
 
     let mounts = _.clone(this.state.mounts);
     _.each(mounts, m => {
@@ -83,9 +78,6 @@ var ContainerSettingsVolumes = React.createClass({
 
   },
   handleOpenVolumeClick: function (path) {
-    metrics.track('Opened Volume Directory', {
-      from: 'settings'
-    });
     if (util.isWindows()) {
       shell.showItemInFolder(util.linuxToWindowsPath(path));
     } else {
@@ -109,7 +101,6 @@ var ContainerSettingsVolumes = React.createClass({
       mounts
     });
 
-    metrics.track('Adding Pending Volume')
   },
   handleRemoveVolume: function (index) {
     let mounts = this.state.mounts.filter((val, idx) => idx !== index);
@@ -118,7 +109,6 @@ var ContainerSettingsVolumes = React.createClass({
       mounts
     });
 
-    metrics.track('Removed Volume')
   },
   handleDestinationChanged: function (index, event) {
     let mounts = _.clone(this.state.mounts);

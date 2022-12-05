@@ -3,7 +3,6 @@ import React from 'react/addons';
 import Router from 'react-router';
 import validator from 'validator';
 import accountActions from '../actions/AccountActions';
-import metrics from '../utils/MetricsUtil';
 import {shell} from 'electron';
 import ReactDOM from 'react-dom';
 
@@ -52,14 +51,12 @@ module.exports = React.createClass({
 
     if (_.isEmpty(errors)) {
       accountActions.login(this.state.username, this.state.password);
-      metrics.track('Clicked Log In');
     }
   },
 
   handleClickSignup: function () {
     if (!this.props.loading) {
       this.replaceWith('signup');
-      metrics.track('Switched to Sign Up');
     }
   },
 

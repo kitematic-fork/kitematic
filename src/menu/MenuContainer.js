@@ -4,7 +4,6 @@
 import electron from 'electron';
 const remote = electron.remote;
 import router from './../router';
-import metrics from './../utils/MetricsUtil';
 import machine from './../utils/DockerMachineUtil';
 import docker from './../utils/DockerUtil';
 import { shell } from 'electron';
@@ -21,9 +20,6 @@ class MenuContainer {
                         accelerator: 'CmdOrCtrl+N',
                         enabled: !!docker.host,
                         click: function () {
-                            metrics.track('Opened new container', {
-                                from: 'menu'
-                            });
                             router.get().transitionTo('search');
                         }
                     },
@@ -32,9 +28,6 @@ class MenuContainer {
                         accelerator: 'CmdOrCtrl+,',
                         enabled: !!docker.host,
                         click: function () {
-                            metrics.track('Opened Preferences', {
-                                from: 'menu'
-                            });
                             router.get().transitionTo('preferences');
                         }
                     }
@@ -53,9 +46,6 @@ class MenuContainer {
                         accelerator: 'CmdOrCtrl+Shift+T',
                         enabled: !!docker.host,
                         click: function () {
-                            metrics.track('Opened Terminal', {
-                                from: 'menu'
-                            });
                             machine.dockerTerminal();
                         }
                     },
@@ -72,18 +62,12 @@ class MenuContainer {
                     {
                         label: 'Online Documentation',
                         click: function () {
-                            metrics.track('Opened Issue Reporter', {
-                                from: 'menu'
-                            });
                             shell.openExternal('https://kitematic-fork.github.io/docs/')
                         }
                     },
                     {
                         label: 'Report Issue or Suggest Feedback',
                         click: function () {
-                            metrics.track('Opened Issue Reporter', {
-                                from: 'menu'
-                            });
                             shell.openExternal('https://github.com/kitematic-fork/kitematic/issues/new');
                         }
                     },
@@ -91,9 +75,6 @@ class MenuContainer {
                         label: 'About',
                         enabled: !!docker.host,
                         click: function () {
-                            metrics.track('Opened About', {
-                                from: 'menu'
-                            });
                             router.get().transitionTo('about');
                         }
                     }

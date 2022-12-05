@@ -1,6 +1,5 @@
 import _ from 'underscore';
 import React from 'react/addons';
-import metrics from '../utils/MetricsUtil';
 import electron, { clipboard } from 'electron';
 const remote = electron.remote;
 const dialog = remote.dialog;
@@ -94,11 +93,9 @@ var ContainerSettingsGeneral = React.createClass({
 
     containerActions.rename(this.props.container.Name, newName);
     this.context.router.transitionTo('containerSettingsGeneral', {name: newName});
-    metrics.track('Changed Container Name');
   },
 
   handleSaveEnvVars: function () {
-    metrics.track('Saved Environment Variables');
     let list = [];
     _.each(this.state.env, kvp => {
       let [, key, value] = kvp;
@@ -131,7 +128,6 @@ var ContainerSettingsGeneral = React.createClass({
     this.setState({
       env: env
     });
-    metrics.track('Added Pending Environment Variable');
   },
 
   handleRemoveEnvVar: function (index) {
@@ -146,7 +142,6 @@ var ContainerSettingsGeneral = React.createClass({
       env: env
     });
 
-    metrics.track('Removed Environment Variable');
   },
 
   handleDeleteContainer: function () {
@@ -155,10 +150,6 @@ var ContainerSettingsGeneral = React.createClass({
       buttons: ['Delete', 'Cancel']
     }).then(({response}) => {
       if (response === 0) {
-        metrics.track('Deleted Container', {
-          from: 'settings',
-          type: 'existing'
-        });
         containerActions.destroy(this.props.container.Name);
       }
     });

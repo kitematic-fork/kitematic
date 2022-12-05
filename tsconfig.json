@@ -14,7 +14,7 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "target": "es2015"
+    "target": "ES2016"
   },
   "files": [
     "./src/main.ts"

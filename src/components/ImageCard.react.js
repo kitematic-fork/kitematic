@@ -2,7 +2,6 @@ import $ from 'jquery';
 import React from 'react/addons';
 import Router from 'react-router';
 import {shell} from 'electron';
-import metrics from '../utils/MetricsUtil';
 import containerActions from '../actions/ContainerActions';
 import imageActions from '../actions/ImageActions';
 import containerStore from '../stores/ContainerStore';
@@ -58,7 +57,6 @@ var ImageCard = React.createClass({
     });
     var $tagOverlay = $(ReactDOM.findDOMNode(this)).find('.tag-overlay');
     $tagOverlay.fadeOut(300);
-    metrics.track('Selected Image Tag');
   },
   handleNetworkClick: function (network) {
     this.setState({
@@ -66,17 +64,8 @@ var ImageCard = React.createClass({
     });
     var $networkOverlay = $(ReactDOM.findDOMNode(this)).find('.network-overlay');
     $networkOverlay.fadeOut(300);
-    metrics.track('Selected Default Network');
   },
   handleClick: function () {
-    metrics.track('Created Container', {
-      from: 'search',
-      private: this.props.image.is_private,
-      official: this.props.image.namespace === 'library',
-      userowned: this.props.image.is_user_repo,
-      recommended: this.props.image.is_recommended,
-      local: this.props.image.is_local || false
-    });
     let name = containerStore.generateName(this.props.image.name);
     let localImage = this.props.image.is_local || false;
     let repo = (this.props.image.namespace === 'library' || this.props.image.namespace === 'local') ? this.props.image.name : this.props.image.namespace + '/' + this.props.image.name;
@@ -148,7 +137,6 @@ var ImageCard = React.createClass({
 
   handleLoginClick: function () {
     this.transitionTo('login');
-    metrics.track('Opened Log In Screen from local image');
   },
 
   render: function() {

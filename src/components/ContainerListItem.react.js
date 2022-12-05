@@ -4,7 +4,6 @@ import Router from 'react-router';
 import electron from 'electron';
 const remote = electron.remote;
 const dialog = remote.dialog;
-import metrics from '../utils/MetricsUtil';
 import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import containerActions from '../actions/ContainerActions';
 
@@ -22,10 +21,6 @@ var ContainerListItem = React.createClass({
       buttons: ['Remove', 'Cancel']
     }).then(({response}) => {
       if (response === 0) {
-        metrics.track('Deleted Container', {
-          from: 'list',
-          type: 'existing'
-        });
         containerActions.destroy(this.props.container.Name);
       }
     });
