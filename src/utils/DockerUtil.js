@@ -136,7 +136,7 @@ var DockerUtil = {
     container.start((error) => {
       if (error) {
         containerServerActions.error({name, error});
-        console.log('error starting: %o - %o', name, error);
+        console.error('error starting: %o - %o', name, error);
         return;
       }
       containerServerActions.started({name, error});
@@ -358,7 +358,7 @@ var DockerUtil = {
           Container: name
         }, (err, data) => {
           if (err) {
-            console.log(err);
+            console.error(err);
             reject(err);
           } else {
             resolve(data);

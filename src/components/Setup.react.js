@@ -36,7 +36,7 @@ var Setup = React.createClass({
   },
 
   handleErrorRemoveRetry: function () {
-    console.log('Deleting VM and trying again.' );
+    console.error('Deleting VM and trying again.' );
     setupActions.retry(true);
   },
 

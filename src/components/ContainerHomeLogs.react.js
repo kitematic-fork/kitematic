@@ -1,6 +1,5 @@
 import $ from 'jquery';
 import React from 'react/addons';
-import Router from 'react-router';
 import containerActions from '../actions/ContainerActions';
 import Convert from 'ansi-to-html';
 import * as fs from 'fs';

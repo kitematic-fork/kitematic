@@ -39,7 +39,7 @@ var ContainerStats = React.createClass({
 
     docker.stats(this.props.container.Name, function(error, stream){
       if(error){
-        console.log('Err: %o', error);
+        console.error('Err: %o', error);
       }else{
         self.stream = stream;
         self.initCharts();
@@ -121,7 +121,7 @@ var ContainerStats = React.createClass({
         })
         stream.on('end', function () {
           if(error){
-            console.log('Err: %o', error);
+            console.error('Err: %o', error);
           }
         });
       }

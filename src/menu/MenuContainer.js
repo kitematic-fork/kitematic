@@ -97,7 +97,6 @@ class MenuContainer {
         });
     };
     removeMenu(menuItem) {
-        console.log(this);
         this._baseMenu.splice(this._baseMenu.indexOf(menuItem), 1)
     };
     static separator() {

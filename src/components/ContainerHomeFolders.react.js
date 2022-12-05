@@ -32,7 +32,7 @@ var ContainerHomeFolder = React.createClass({
           });
 
           mkdirp(newSource, function (err) {
-            console.log(err);
+            console.error(err);
             if (!err) {
               shell.showItemInFolder(newSource);
             }
