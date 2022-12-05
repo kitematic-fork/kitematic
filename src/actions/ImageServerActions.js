@@ -6,7 +6,8 @@ class ImageServerActions {
       'added',
       'updated',
       'destroyed',
-      'error'
+      'error',
+      'pushing'
     );
   }
 }
