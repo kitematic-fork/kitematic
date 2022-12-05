@@ -5,7 +5,6 @@
   "setupTestFrameworkScriptFile": "<rootDir>/util/prepare.js",
   "unmockedModulePathPatterns": [
     "babel",
-    "core-js",
-    "<rootDir>/node_modules/source-map-support"
+    "core-js"
   ]
 }
