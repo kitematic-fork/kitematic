@@ -1,5 +1,4 @@
 import React from 'react/addons';
-import RetinaImage from 'react-retina-image';
 import util from '../utils/Util';
 import metrics from '../utils/MetricsUtil';
 import electron from 'electron';
@@ -70,7 +69,7 @@ var Header = React.createClass({
   renderLogo: function () {
       return (
           <div className="logo">
-            <RetinaImage src="logo.png"/>
+            <img src="logo.png"/>
           </div>
       );
   },
@@ -92,7 +91,7 @@ var Header = React.createClass({
                 {this.state.username}
                 {this.state.verified ? null : '(Unverified)'}
               </span>
-              <RetinaImage src="userdropdown.png"/>
+              <img src="userdropdown.png"/>
           </div>
         </div>
       );
@@ -104,7 +103,7 @@ var Header = React.createClass({
                 {this.state.username}
                 {this.state.verified ? null : '(Unverified)'}
               </span>
-            <RetinaImage src="userdropdown.png"/>
+            <img src="userdropdown.png"/>
           </div>
       );
     }else{

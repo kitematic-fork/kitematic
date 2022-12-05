@@ -2,7 +2,6 @@ import $ from 'jquery';
 import React from 'react/addons';
 import Router from 'react-router';
 import {shell} from 'electron';
-import RetinaImage from 'react-retina-image';
 import metrics from '../utils/MetricsUtil';
 import containerActions from '../actions/ContainerActions';
 import imageActions from '../actions/ImageActions';
@@ -174,7 +173,7 @@ var ImageCard = React.createClass({
     }
     var tags;
     if (this.state.loading) {
-      tags = <RetinaImage className="items-loading" src="loading.png"/>;
+      tags = <img className="items-loading" src="loading.png"/>;
     } else if (this.state.tags.length === 0) {
       tags = <div className="no-items">No Tags</div>;
     } else {
@@ -323,7 +322,7 @@ var ImageCard = React.createClass({
           </div>
         </div>
         <div className="logo" style={logoStyle}>
-          <RetinaImage src={imgsrc}/>
+          <img src={imgsrc}/>
         </div>
         <div className="card">
           <div className="info">
