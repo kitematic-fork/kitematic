@@ -4,9 +4,9 @@ import path from 'path';
 import {shell} from 'electron';
 import util from '../utils/Util';
 import containerActions from '../actions/ContainerActions';
-import electron from 'electron';
-const remote = electron.remote;
-const dialog = remote.dialog;
+
+import { dialog } from '@electron/remote';
+
 import mkdirp from 'mkdirp';
 
 var ContainerHomeFolder = React.createClass({

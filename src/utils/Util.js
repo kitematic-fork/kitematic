@@ -12,9 +12,7 @@ var cacheDirectory = os.tmpdir() + '/cachekitematic';
 cachedRequest.setCacheDirectory(cacheDirectory);
 cachedRequest.setValue('ttl', 3000);
 
-const remote = electron.remote;
-const dialog = remote.dialog;
-const app = remote.app;
+import { app, dialog  } from '@electron/remote';
 
 module.exports = {
   native: null,

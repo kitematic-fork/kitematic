@@ -1,8 +1,8 @@
 import _ from 'underscore';
 import React from 'react/addons';
-import electron from 'electron';
-const remote = electron.remote;
-const dialog = remote.dialog;
+
+import { dialog } from '@electron/remote';
+
 import {shell} from 'electron';
 import util from '../utils/Util';
 import containerActions from '../actions/ContainerActions';

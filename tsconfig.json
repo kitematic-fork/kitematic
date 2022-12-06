@@ -4,7 +4,7 @@
     "checkJs": false,
     "charset": "utf-8",
     "jsx": "preserve",
-    "module": "es2015",
+    "module": "es2020",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -14,7 +14,7 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "target": "ES2016"
+    "target": "es2020"
   },
   "files": [
     "./src/main.ts"

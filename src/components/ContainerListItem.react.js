@@ -1,8 +1,6 @@
 import React from 'react/addons';
 import Router from 'react-router';
-import electron from 'electron';
-const remote = electron.remote;
-const dialog = remote.dialog;
+import { dialog } from '@electron/remote';
 import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import containerActions from '../actions/ContainerActions';
 

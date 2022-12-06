@@ -1,7 +1,8 @@
-import 'babel-polyfill';
-import electron from 'electron';
-const remote = electron.remote;
-const Menu = remote.Menu;
+const electron = require('electron');
+
+import { Menu } from '@electron/remote';
+
+
 import os from 'os';
 // ipcRenderer is used as we're in the process
 const ipcRenderer = electron.ipcRenderer;

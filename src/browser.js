@@ -1,11 +1,11 @@
-import electron from 'electron';
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+
+require('@electron/remote/main').initialize()
+
 
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import child_process from 'child_process';
 let Promise = require('bluebird');
 
 process.env.NODE_PATH = path.join(__dirname, 'node_modules');
@@ -31,14 +31,17 @@ app.on('ready', function () {
     minHeight: os.platform() === 'win32' ? 260 : 500,
     'standard-window': false,
     resizable: true,
-    show: false,
+    show: true,
     // autoHideMenuBar:true,
-    titleBarStyle: 'hidden',
+    // titleBarStyle: 'hidden',
     icon:path.join(__dirname,'/../util/kitematic.ico'),
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false
     },
   });
+
+  require("@electron/remote/main").enable(mainWindow.webContents)
 
   if (process.env.NODE_ENV === 'development') {
     mainWindow.openDevTools({mode: 'detach'});
@@ -75,9 +78,9 @@ app.on('ready', function () {
     });
   }
 
-  mainWindow.webContents.on('new-window', function (e) {
-    e.preventDefault();
-  });
+  mainWindow.webContents.setWindowOpenHandler((details) => {
+    return { action: 'deny' }
+  })
 
   mainWindow.webContents.on('will-navigate', function (e, url) {
     if (url.indexOf('build/index.html#') < 0) {

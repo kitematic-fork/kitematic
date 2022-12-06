@@ -433,14 +433,13 @@ var DockerUtil = {
               var last = parts[parts.length-1];
 
               var newTag = `${user}/${last}`;
-debugger;
+
               image.tag({
                 authconfig: opts.authconfig,
                 repo: newTag,
               }, (err, data) => {
 
                 image = this.client.getImage(newTag);
-                // debugger
 
                 image.push(opts, (err, data) => {
                   if (err) {
@@ -831,8 +830,7 @@ debugger;
   listen () {
     this.detachEvent()
     this.client.getEvents((error, stream) => {
-      // TODO
-      debugger
+
       if (error || !stream) {
         // TODO: Add app-wide error handler
         return;

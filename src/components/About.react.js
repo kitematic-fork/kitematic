@@ -51,7 +51,7 @@ var Preferences = React.createClass({
           <div className="items">
             <div className="item">
               <h4>Electron</h4>
-              <p>{packages["electron-version"]}</p>
+              <p>{process.versions.electron}</p>
             </div>
           </div>
         </div>

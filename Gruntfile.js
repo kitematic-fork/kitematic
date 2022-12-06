@@ -1,4 +1,6 @@
-var packagejson = require('./package.json');
+const packagejson = require('./package.json');
+const version = packagejson['electron-version'];
+
 var electron = require('electron');
 
 module.exports = function (grunt) {
@@ -29,7 +31,7 @@ module.exports = function (grunt) {
           name: BASENAME,
           dir: 'build/',
           out: 'dist',
-          version: packagejson['electron-version'],
+          version,
           platform: 'win32',
           arch: 'x64',
           asar: true,
@@ -41,7 +43,7 @@ module.exports = function (grunt) {
           name: BASENAME,
           dir: 'build/',
           out: 'dist',
-          version: packagejson['electron-version'],
+          version,
           platform: 'darwin',
           arch: 'x64',
           asar: true,
@@ -54,7 +56,7 @@ module.exports = function (grunt) {
           name: BASENAME,
           dir: 'build/',
           out: 'dist',
-          version: packagejson['electron-version'],
+          version,
           platform: 'linux',
           arch: 'x64',
           asar: true,
@@ -277,7 +279,7 @@ module.exports = function (grunt) {
           out: './dist/',
           name: 'Kitematic',
           icon: './util/kitematic.png',
-          version: packagejson['electron-version'], // set version of electron
+          version, // set version of electron
           overwrite: true,
         }
       },
@@ -288,7 +290,7 @@ module.exports = function (grunt) {
           dir: './build',
           out: './dist/',
           name: 'Kitematic',
-          version: packagejson['electron-version'], // set version of electron
+          version, // set version of electron
           overwrite: true,
         }
       },

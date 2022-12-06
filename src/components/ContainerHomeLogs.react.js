@@ -3,8 +3,10 @@ import React from 'react/addons';
 import containerActions from '../actions/ContainerActions';
 import Convert from 'ansi-to-html';
 import * as fs from 'fs';
-import { clipboard, remote, shell } from 'electron';
-const dialog = remote.dialog;
+import { clipboard , shell } from 'electron';
+
+import { dialog } from '@electron/remote';
+
 
 let escape = function (html) {
   var text = document.createTextNode(html);

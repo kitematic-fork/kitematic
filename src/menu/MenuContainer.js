@@ -1,8 +1,7 @@
 /**
  * Created by thofl on 3/26/2016.
  */
-import electron from 'electron';
-const remote = electron.remote;
+import { getCurrentWindow } from '@electron/remote';
 import router from './../router';
 import machine from './../utils/DockerMachineUtil';
 import docker from './../utils/DockerUtil';
@@ -39,7 +38,7 @@ class MenuContainer {
                     {
                         label: 'Relaunch Kitematic',
                         accelerator: 'CmdOrCtrl+r',
-                        click: function () { remote.getCurrentWindow().reload(); }
+                        click: function () { getCurrentWindow().reload(); }
                     },
                     {
                         label: 'Command Line Terminal',
@@ -52,7 +51,7 @@ class MenuContainer {
                     {
                         label: 'Developer Tools',
                         accelerator: 'Alt+CmdOrCtrl+I',
-                        click: function () { remote.getCurrentWindow().toggleDevTools(); }
+                        click: function () { getCurrentWindow().toggleDevTools(); }
                     }
                 ]
             },

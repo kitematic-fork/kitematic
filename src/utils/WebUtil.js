@@ -1,8 +1,6 @@
 import electron from 'electron';
-const remote = electron.remote;
-const app = remote.app;
+const app = electron.app;
 import fs from 'fs';
-import util from './Util';
 import path from 'path';
 
 var WebUtil = {

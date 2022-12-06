@@ -2,8 +2,7 @@
  * Created by thofl on 3/26/2016.
  */
 import electron from 'electron';
-const remote = electron.remote;
-const app = remote.app;
+const app = electron.app;
 import MenuContainer from './MenuContainer'
 
 
