@@ -113,9 +113,13 @@ var ContainerSettingsNetwork = React.createClass({
 
     return _.values(containers).filter(function(container){
 
-      var sameNetworks = _.keys(container.NetworkSettings.Networks).filter(function(network){
-        return _.contains(usedNetworks, network);
-      });
+      var sameNetworks = []
+      
+      if(container.NetworkSetting) {
+        sameNetworks = _.keys(container.NetworkSettings.Networks).filter(function(network){
+          return _.contains(usedNetworks, network);
+        });
+      }
 
       if(container.State.Downloading){ // is downloading
         return false;

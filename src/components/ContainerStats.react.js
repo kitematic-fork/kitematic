@@ -90,15 +90,18 @@ var ContainerStats = React.createClass({
             // Network
             var networkIn = 0;
             var networkOut = 0;
-            Object.keys(data.networks).forEach(function(net_name){
-              if(pre_networks[net_name]){
-                var net_data = data.networks[net_name];
-                var pre_net_data = pre_networks[net_name];
-                networkIn += (net_data.rx_bytes - pre_net_data.rx_bytes);
-                networkOut += (net_data.tx_bytes - pre_net_data.tx_bytes);
-              }
-            })
-            pre_networks = data.networks;
+
+            if(data.networks) {
+              Object.keys(data.networks).forEach(function(net_name){
+                if(pre_networks[net_name]){
+                  var net_data = data.networks[net_name];
+                  var pre_net_data = pre_networks[net_name];
+                  networkIn += (net_data.rx_bytes - pre_net_data.rx_bytes);
+                  networkOut += (net_data.tx_bytes - pre_net_data.tx_bytes);
+                }
+              })
+              pre_networks = data.networks;
+            }
 
             self.setState({
               cpu: {
