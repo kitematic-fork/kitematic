@@ -61,15 +61,11 @@ module.exports = React.createClass({
     localStorage.setItem("settings.logsFontSize", $target.value);
   },
 
-  scrollToEnd: function() {
-    const node = $('.logs').get()[0];
-    node.scrollTop = node.scrollHeight;
-  },
-
   scrollHighlightIntoView: function() {
     const node = $('.logs').get()[0];
     const $highlight = $('.highlight');
-    if ($highlight.length > 0) {
+
+    if (this.state.searchText && $highlight.length > 0) {
       const topBarHeight = 40;
       const searchFieldHeight = 20;
 
@@ -82,13 +78,17 @@ module.exports = React.createClass({
       } else if (pos > max) {
         node.scrollTop = pos - node.clientHeight + searchFieldHeight;
       }
+    } else {
+      
+      if(this.state.follow) {
+        node.scrollTop = node.scrollHeight;
+      }
     }
   },
 
   componentDidUpdate: function () {
     if (this.props.container.Logs && this.props.container.Logs.length != this.state.lineNum) {
-      this.scrollToEnd();
-      this.setState({lineNum: this.props.container.Logs.length});
+        this.setState({lineNum: this.props.container.Logs.length});   
     }
 
     this.scrollHighlightIntoView();
@@ -148,14 +148,19 @@ module.exports = React.createClass({
 
     this.state.searchText = this.state.searchText || '';
 
-    const highlight = (line) => line.replace(RegExp(this.state.searchText, 'i') || null, '<mark>$&</mark>');
-    const markRegExp = RegExp(`((?!<mark)[\\s\\S]*?(<mark)){${this.state.currentHighlighted}}`);
+    var logs = this.props.container.Logs;
 
-    const highlightedLog = this.props.container.Logs.map((l, idx) => highlight(escape(l.substr(l.indexOf(' ')+1))).replace(/ /g, '&nbsp;<wbr>')).join('\n');
-    const highlightedLogs = highlightedLog.replace(markRegExp, "$& class='highlight'").split('\n');
+    if(this.state.searchText) {
+      const highlight = (line) => line.replace(RegExp(this.state.searchText, 'i') || null, '<mark>$&</mark>');
+      const markRegExp = RegExp(`((?!<mark)[\\s\\S]*?(<mark)){${this.state.currentHighlighted}}`);
+  
+      const highlightedLog = this.props.container.Logs.map((l, idx) => highlight(escape(l.substr(l.indexOf(' ')+1))).replace(/ /g, '&nbsp;<wbr>')).join('\n');
+      logs = highlightedLog.replace(markRegExp, "$& class='highlight'").split('\n');
+    }
+
 
     return (
-      highlightedLogs.map((l, idx) => <div key={`${this.props.container.Name}-${idx}`} dangerouslySetInnerHTML={{__html: convert.toHtml(l)}}></div>)
+      logs.map((l, idx) => <div key={`${this.props.container.Name}-${idx}`} dangerouslySetInnerHTML={{__html: convert.toHtml(l)}}></div>)
     );
   },
 

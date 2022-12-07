@@ -33,7 +33,7 @@ module.exports = React.createClass({
         logActions.search('');
         event.preventDefault();
       }
-    } else {
+    } else if(event.keyCode != 27) { //escape
       event.stopPropagation();
     }
   },
