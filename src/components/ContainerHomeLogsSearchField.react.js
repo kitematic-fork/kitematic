@@ -3,28 +3,58 @@ import logActions from '../actions/LogActions';
 
 module.exports = React.createClass({
 
-  focus: function() {
-    this.refs.searchField.focus(); 
+  getInitialState: function () {
+    return {
+      searchText: undefined,
+      previousSearchText: undefined,
+    };
   },
 
-  componentDidMount: function() {
+  focus: function() {
+    this.refs.searchField.focus();
+  },
+
+  handleKeyDown: function (event) {
+
+    //enter
+    if (event.keyCode == 13) {
+
+      this.searchText = document.getElementById('logSearchField').value.trim();
+
+      if (this.searchText && this.searchText.length && this.searchText.length > 3) {
+        if (this.searchText != this.previousSearchText) {
+          this.previousSearchText = this.searchText;
+          logActions.search(this.searchText);
+        } else {
+          event.preventDefault();
+        }
+      } else if(this.previousSearchText) {
+        this.previousSearchText = this.searchText;
+        logActions.search('');
+        event.preventDefault();
+      }
+    } else {
+      event.stopPropagation();
+    }
+  },
+
+  componentDidMount: function () {
+    document.getElementById('logSearchField').addEventListener('keydown', this.handleKeyDown);
     this.focus();
   },
 
-  componentWillUnmount: function() {
+  componentWillUnmount: function () {
     logActions.search.defer('');
+    document.getElementById('logSearchField').removeEventListener('keydown', this.handleKeyDown);
   },
 
-  handleChange: function(e) {
-    logActions.search(e.target.value);
-  },
 
   render: function () {
     return (
       <div className="logs-search-field">
         <div className="logs-search-text">
           <div className="logs-search-prompt">find:</div>
-          <input type="search" ref="searchField" className="logs-search-query" onChange={this.handleChange} />
+          <input type="search" id='logSearchField' ref="searchField" className="logs-search-query" />
         </div>
       </div>
     );

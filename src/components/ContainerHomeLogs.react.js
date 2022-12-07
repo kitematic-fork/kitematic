@@ -145,6 +145,9 @@ module.exports = React.createClass({
   },
 
   escapeAndHighlightLogs: function() {
+
+    this.state.searchText = this.state.searchText || '';
+
     const highlight = (line) => line.replace(RegExp(this.state.searchText, 'i') || null, '<mark>$&</mark>');
     const markRegExp = RegExp(`((?!<mark)[\\s\\S]*?(<mark)){${this.state.currentHighlighted}}`);
 
@@ -158,11 +161,16 @@ module.exports = React.createClass({
 
   render: function () {
     let _logs = '';
-    let logs = this.props.container.Logs ? this.props.container.Logs.map((l, index) => {
-        const key = `${this.props.container.Name}-${index}`;
+
+    let hasLogs = !!this.props.container.Logs;
+
+    if(hasLogs) {
+      this.props.container.Logs.map((l, index) => {
         _logs = _logs.concat((l.substr(l.indexOf(' ')+1)).replace(/\[\d+m/g,'').concat('\n'));
-        return <div key={key} dangerouslySetInnerHTML={{__html: convert.toHtml(escape(l.substr(l.indexOf(' ')+1)).replace(/ /g, '&nbsp;<wbr>'))}}></div>;
-      }) : ['0 No logs for this container.'];
+      });
+    }
+  
+    const logs = hasLogs ? this.escapeAndHighlightLogs() : ['0 No logs for this container.'];
 
     const searchField = this.state.searchFieldVisible ? <ContainerHomeLogsSearchField ref="searchField"></ContainerHomeLogsSearchField> : '';
     let copyLogs = (event) => {
