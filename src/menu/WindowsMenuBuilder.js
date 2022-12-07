@@ -5,6 +5,7 @@ import _ from 'underscore';
 import electron from 'electron';
 const remote = electron.remote;
 import { shell } from 'electron';
+import { getCurrentWindow } from '@electron/remote';
 
 class WindowsMenuBuilder{
     build(menuContainer){
@@ -14,7 +15,7 @@ class WindowsMenuBuilder{
                 label: 'Exit',
                 accelerator: 'CmdOrCtrl+W',
                 click: function () {
-                    remote.getCurrentWindow().close();
+                    getCurrentWindow().close();
                 }
             }
         });

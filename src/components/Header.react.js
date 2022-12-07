@@ -7,6 +7,7 @@ import accountStore from '../stores/AccountStore';
 import accountActions from '../actions/AccountActions';
 import Router from 'react-router';
 import classNames from 'classnames';
+import { getCurrentWindow } from '@electron/remote';
 
 var Header = React.createClass({
   mixins: [Router.Navigation],
@@ -35,8 +36,8 @@ var Header = React.createClass({
     });
   },
   handleDocumentKeyUp: function (e) {
-    if (e.keyCode === 27 && remote.getCurrentWindow().isFullScreen()) {
-      remote.getCurrentWindow().setFullScreen(false);
+    if (e.keyCode === 27 && getCurrentWindow().isFullScreen()) {
+      getCurrentWindow().setFullScreen(false);
       this.forceUpdate();
     }
   },
@@ -48,7 +49,7 @@ var Header = React.createClass({
     }
 
     menu.append(new MenuItem({ label: 'Sign Out', click: this.handleLogoutClick}));
-    menu.popup(remote.getCurrentWindow(), e.currentTarget.offsetLeft, e.currentTarget.offsetTop + e.currentTarget.clientHeight + 10);
+    menu.popup(getCurrentWindow(), e.currentTarget.offsetLeft, e.currentTarget.offsetTop + e.currentTarget.clientHeight + 10);
   },
   handleLoginClick: function () {
     this.transitionTo('login');

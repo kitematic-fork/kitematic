@@ -5,6 +5,8 @@ import { app  } from '@electron/remote';
 
 import MenuContainer from './MenuContainer'
 
+import { getCurrentWindow } from '@electron/remote';
+
 
 class OsxLinuxMenuBuilder {
     build(menuContainer) {
@@ -78,7 +80,7 @@ class OsxLinuxMenuBuilder {
                         label: 'Close',
                         accelerator: 'CmdOrCtrl+W',
                         click: function () {
-                            remote.getCurrentWindow().hide();
+                            getCurrentWindow().hide();
                         }
                     }})
         menuContainer.pushSubMenu({label: 'Window', subItem: MenuContainer.separator()});
@@ -92,7 +94,7 @@ class OsxLinuxMenuBuilder {
                 label: 'Kitematic',
                 accelerator: 'Cmd+0',
                 click: function () {
-                    remote.getCurrentWindow().show();
+                    getCurrentWindow().show();
                 }
             }
         });
