@@ -33,7 +33,7 @@ module.exports = React.createClass({
     };
   },
   componentDidMount: function () {
-    this.refs.searchInput.getDOMNode().focus();
+    this.refs.searchInput.focus();
     repositoryStore.listen(this.update);
     accountStore.listen(this.updateAccount);
     imageStore.listen(this.updateImage);

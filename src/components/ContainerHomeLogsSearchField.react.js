@@ -1,13 +1,10 @@
-import $ from 'jquery';
 import React from 'react/addons';
-import Router from 'react-router';
 import logActions from '../actions/LogActions';
-import Convert from 'ansi-to-html';
 
 module.exports = React.createClass({
 
   focus: function() {
-    this.refs.searchField.getDOMNode().focus(); 
+    this.refs.searchField.focus(); 
   },
 
   componentDidMount: function() {
