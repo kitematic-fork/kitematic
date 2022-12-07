@@ -1,8 +1,8 @@
 /**
  * Created by thofl on 3/26/2016.
  */
-import electron from 'electron';
-const app = electron.app;
+import { app  } from '@electron/remote';
+
 import MenuContainer from './MenuContainer'
 
 

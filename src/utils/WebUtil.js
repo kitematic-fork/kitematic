@@ -1,5 +1,4 @@
-import electron from 'electron';
-const app = electron.app;
+import { app  } from '@electron/remote';
 import fs from 'fs';
 import path from 'path';
 
