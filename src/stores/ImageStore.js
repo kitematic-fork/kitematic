@@ -35,7 +35,6 @@ class ImageStore {
     stream.setEncoding('utf8');
       stream.on('data', json => {
 
-        debugger
         let data = JSON.parse(json);
 
         if (['pull', 'untag', 'tag', 'delete', 'attach'].includes(data.status)) {

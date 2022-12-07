@@ -130,7 +130,7 @@ var ImageCard = React.createClass({
   },
 
   focusSearchTagInput: function() {
-    this.refs.searchTagInput.getDOMNode().focus();
+    this.refs.searchTagInput.focus();
   },
 
   handleLoginClick: function () {
