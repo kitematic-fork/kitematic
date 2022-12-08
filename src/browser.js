@@ -37,7 +37,8 @@ app.on('ready', function () {
     icon:path.join(__dirname,'/../util/kitematic.ico'),
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
+      spellcheck: false
     },
   });
 
