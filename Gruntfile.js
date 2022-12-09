@@ -159,7 +159,7 @@ module.exports = function (grunt) {
       },
       dist: {
         files: {
-          'build/main.css': 'styles/mainlight.less',
+          'build/mainlight.css': 'styles/mainlight.less',
           'build/maindark.css': 'styles/maindark.less'
         }
       }
