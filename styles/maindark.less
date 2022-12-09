@@ -279,6 +279,9 @@ a:hover{
 .details-panel .settings .settings-menu{
   border-bottom: 1px solid #000000;
 }
+.details-panel .settings .settings-menu ul a.active li{
+  color: #ffffff;
+}
 .details-panel .settings .settings-menu ul a:hover li{
   color: #ffffff;
 }
@@ -291,9 +294,24 @@ a:hover{
 .details-panel .settings .settings-panel .container-info-row input{
   background-color: #333333;
 }
-input[type="text"].line{
+
+.details-panel .settings .settings-panel .table.ports input {
+  color: #ffffff;
+  background-color: #333333;
+}
+
+.result-grids .result-grid .image-item .logo {
+  background-color: unset;
+}
+
+.result-grids .result-grid .image-item .card .actions .action {
+  background-color: unset;
+}
+
+input[type="text"].line, textarea.line {
   color: #ffffff;
   border-bottom: 1px solid #000000;
+  background-color: #333333;
 }
 .details-panel .settings .settings-panel .container-info-row a{
   background-color: #dedede;
@@ -302,4 +320,57 @@ input[type="text"].line{
 }
 .details-panel .settings .settings-panel .env-vars input{
   background-color: #333333;
+}
+
+.stats-charts-container{
+  display: block;
+  float: left;
+  &:after {
+    content: "";
+    clear: left;
+  }
+  &.stats-charts-container-horizontal{
+    width: 60%;
+    .stats-chart {
+      float: left;
+      width: 46%;
+      margin: 0 2% 0 2%;
+      .stats-chart-title{
+        margin-bottom: 0.5em;
+      }
+    }
+  }
+  &.stats-charts-container-vertical{
+    width: 40%;
+    .stats-chart {
+      margin: 0 2% 0 2%;
+      &:first-child {
+        margin-bottom: 2em;
+      }
+      .stats-chart-title-composite{
+        text-align: right;
+        .stats-chart-title{
+          margin-right: 0.5em;
+        }
+        .stats-chart-info{
+          min-width: 6em;
+          display: inline-block;
+        }
+      }
+    }
+  }
+  .stats-chart-title{
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    >span{
+      margin: 0 0.5em 0 0.5em;
+    }
+  }
+  .stats-chart-info{
+    text-align: center;
+    color: #22b8eb;
+    font-size: 11px;
+    font-weight: 400;
+  }
 }
