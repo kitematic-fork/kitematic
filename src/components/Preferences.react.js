@@ -23,14 +23,16 @@ var FontSelect = React.createClass({
 });
 var Preferences = React.createClass({
   mixins: [Router.Navigation],
-  getInitialState: function () {
+  getInitialState: function () {//console.log(localStorage.getItem('settings.colorshema') + " testsdssdsd");
     return {
       closeVMOnQuit: localStorage.getItem('settings.closeVMOnQuit') === 'true',
       useVM: localStorage.getItem('settings.useVM') === 'true',
       terminalShell: localStorage.getItem('settings.terminalShell') || "sh",
       terminalPath: localStorage.getItem('settings.terminalPath') || "/usr/bin/xterm",
       startLinkedContainers: localStorage.getItem('settings.startLinkedContainers') === 'true',
-      logsFontSize: localStorage.getItem('settings.logsFontSize') || 10
+      logsFontSize: localStorage.getItem('settings.logsFontSize') || 10,
+      startLinkedContainers: localStorage.getItem('settings.startLinkedContainers') === 'true',
+      colorShema: localStorage.getItem('settings.colorshema') || "light"
     };
   },
   handleGoBackClick: function () {
@@ -64,6 +66,15 @@ var Preferences = React.createClass({
       terminalPath: value
     });
     localStorage.setItem('settings.terminalPath', value);
+  },
+  handleColorShema: function (e) {
+    var value = e.target.value;
+    this.setState({
+      colorShema: value
+    });
+    localStorage.setItem('settings.colorshema', value);
+
+    util.loadTheme(value);
   },
   handleChangeStartLinkedContainers: function (e) {
     var checked = e.target.checked;
@@ -171,6 +182,17 @@ var Preferences = React.createClass({
             </div>
             <div className="option-value">
               <FontSelect id="logsFontSize" fontSize={this.state.logsFontSize} onChange={this.handleChangeLogsFontSize} />
+            </div>
+          </div>
+          <div className="option">
+            <div className="option-name">
+              <label htmlFor="colorShema">Theme</label>
+            </div>
+            <div className="option-value">
+              <select id="mode" value={this.state.colorShema} onChange={this.handleColorShema}>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
             </div>
           </div>
           {linuxSettings}

@@ -142,9 +142,18 @@ var ContainerStats = React.createClass({
     Chart.defaults.global.tooltips.enabled = false;
     Chart.defaults.global.title.display = false;
 
-    var foregroundColor = "#42a5f5";
-    var backgroundColor = "#F6F8FB";
+    const colorSchema = localStorage.getItem('settings.colorshema') || 'ligth';
 
+    let foregroundColor;
+    let backgroundColor;
+
+    if(colorSchema == 'ligth') {
+      foregroundColor = "#42a5f5";
+      backgroundColor = "#F6F8FB";  
+    } else if(colorSchema == 'dark') {
+      foregroundColor = "white";
+      backgroundColor = "grey";
+    }
     var canvas = null;
     var ctx = null;
 

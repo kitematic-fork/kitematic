@@ -206,16 +206,16 @@ var ContainerSettingsPorts = React.createClass({
       var portValue = '';
       if (key === '') {
         icon = <td><a disabled={isUpdating} onClick={this.handleAddPort} className="only-icon btn btn-positive small"><span className="icon icon-add"></span></a></td>;
-        portKey = <input id={'portKey' + key} type="text" disabled={isUpdating} defaultValue={key} />;
-        portValue = <input id={'portValue' + key} type="text" disabled={isUpdating} defaultValue={port} />;
+        portKey = <input class="line" id={'portKey' + key} type="text" disabled={isUpdating} defaultValue={key} />;
+        portValue = <input class="line" id={'portValue' + key} type="text" disabled={isUpdating} defaultValue={port} />;
       }else {
         if (this.isInitialPort(key, this.state.initialPorts)) {
           icon = <td></td>;
         }else {
           icon = <td><a disabled={isUpdating} onClick={this.handleRemovePort.bind(this, key)} className="only-icon btn btn-action small"><span className="icon icon-delete"></span></a></td>;
         }
-        portKey = <input id={'portKey' + key} type="text" onChange={this.handleChangePortKey.bind(this, key)} disabled={isUpdating} defaultValue={key} />;
-        portValue = <input id={'portValue' + key} type="text" onChange={this.handleChangePort.bind(this, key)} disabled={isUpdating} defaultValue={port} />;
+        portKey = <input class="line" id={'portKey' + key} type="text" onChange={this.handleChangePortKey.bind(this, key)} disabled={isUpdating} defaultValue={key} />;
+        portValue = <input class="line" id={'portValue' + key} type="text" onChange={this.handleChangePort.bind(this, key)} disabled={isUpdating} defaultValue={port} />;
       }
       return (
         <tr key={key}>

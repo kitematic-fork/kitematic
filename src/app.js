@@ -13,6 +13,7 @@ import Promise from 'bluebird';
 
 import webUtil from './utils/WebUtil';
 import hubUtil from './utils/HubUtil';
+import util from './utils/Util';
 import setupUtil from './utils/SetupUtil';
 import docker from './utils/DockerUtil';
 import hub from './utils/HubUtil';
@@ -22,6 +23,8 @@ import routerContainer from './router';
 import repositoryActions from './actions/RepositoryActions';
 import machine from './utils/DockerMachineUtil';
 import MenuFactory from './menu/MenuFactory';
+
+//console.log(localStorage.getItem('settings.ColorShema'));
 
 Promise.config({cancellation: true});
 
@@ -44,7 +47,10 @@ var router = Router.create({
 router.run(Handler => ReactDOM.render(<Handler/>, document.body));
 routerContainer.set(router);
 
+console.log(localStorage.getItem('settings.colorshema'));
 
+
+util.loadTheme(localStorage.getItem('settings.colorshema'))
 
 setupUtil.setup().then(() => {
   Menu.setApplicationMenu(Menu.buildFromTemplate(MenuFactory.buildMenu(os.platform())));

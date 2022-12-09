@@ -23,6 +23,46 @@ try {
   settingsjson = JSON.parse(fs.readFileSync(path.join(__dirname, 'settings.json'), 'utf8'));
 } catch (err) {}
 
+/*
+
+// mainWindow with show: false
+mainWindow.on('ready-to-show',function() {
+  var electronVibrancy = require('..');
+
+  // Whole window vibrancy with Material 0 and auto resize
+  electronVibrancy.SetVibrancy(mainWindow, 0);
+
+  // auto resizing vibrant view at {0,0} with size {300,300} with Material 0
+  electronVibrancy.AddView(mainWindow, { Width: 300,Height:300,X:0,Y:0,ResizeMask:2,Material:0 })
+
+  // non-resizing vibrant view at {0,0} with size {300,300} with Material 0
+  electronVibrancy.AddView(mainWindow, { Width: 300,Height:300,X:0,Y:0,ResizeMask:3,Material:0 })
+
+  //Remove a view
+  var viewId = electronVibrancy.SetVibrancy(mainWindow, 0);
+  electronVibrancy.RemoveView(mainWindow,viewId);
+
+  // Add a view then update it
+  var viewId = electronVibrancy.SetVibrancy(mainWindow, 0);
+  electronVibrancy.UpdateView(mainWindow,{ ViewId: viewId,Width: 600, Height: 600 });
+
+  // Multipe views with different materials
+  var viewId1 = electronVibrancy.AddView(mainWindow, { Width: 300,Height:300,X:0,Y:0,ResizeMask:3,Material:0 })
+  var viewId2 = electronVibrancy.AddView(mainWindow, { Width: 300,Height:300,X:300,Y:0,ResizeMask:3,Material:2 })
+
+  console.log(viewId1);
+  console.log(viewId2);
+
+  // electronVibrancy.RemoveView(mainWindow,0);
+  // electronVibrancy.RemoveView(mainWindow,1);
+
+  // or
+
+  electronVibrancy.DisableVibrancy(mainWindow);
+})
+
+ */
+
 app.on('ready', function () {
   var mainWindow = new BrowserWindow({
     width: size.width || 1080,
@@ -31,7 +71,7 @@ app.on('ready', function () {
     minHeight: os.platform() === 'win32' ? 260 : 500,
     'standard-window': false,
     resizable: true,
-    show: true,
+    // show: true,
     // autoHideMenuBar:true,
     // titleBarStyle: 'hidden',
     icon:path.join(__dirname,'/../util/kitematic.ico'),
@@ -40,6 +80,9 @@ app.on('ready', function () {
       contextIsolation: false,
       spellcheck: false
     },
+    frame: false,
+    transparent: true,
+    show: false
   });
 
   require("@electron/remote/main").enable(mainWindow.webContents)
