@@ -2,9 +2,7 @@ import _ from 'underscore';
 import React from 'react/addons';
 import { clipboard } from 'electron';
 import { dialog } from '@electron/remote';
-import ContainerUtil from '../utils/ContainerUtil';
 import containerActions from '../actions/ContainerActions';
-import util from '../utils/Util';
 import rekcod from 'rekcod';
 
 var ContainerSettingsGeneral = React.createClass({
@@ -15,19 +13,12 @@ var ContainerSettingsGeneral = React.createClass({
   },
 
   getInitialState: function () {
-    let env = ContainerUtil.env(this.props.container) || [];
-    env.push(['', '']);
-
-    env = _.map(env, e => {
-      return [util.randomId(), e[0], e[1]];
-    });
 
     return {
       slugName: null,
       nameError: null,
       copiedId: false,
-      copiedRunCmd: false,
-      env: env
+      copiedRunCmd: false
     };
   },
 
@@ -92,55 +83,6 @@ var ContainerSettingsGeneral = React.createClass({
 
     containerActions.rename(this.props.container.Name, newName);
     this.context.router.transitionTo('containerSettingsGeneral', {name: newName});
-  },
-
-  handleSaveEnvVars: function () {
-    let list = [];
-    _.each(this.state.env, kvp => {
-      let [, key, value] = kvp;
-      if ((key && key.length) || (value && value.length)) {
-        list.push(key + '=' + value);
-      }
-    });
-    containerActions.update(this.props.container.Name, {Env: list});
-  },
-
-  handleChangeEnvKey: function (index, event) {
-    let env = _.map(this.state.env, _.clone);
-    env[index][1] = event.target.value;
-    this.setState({
-      env: env
-    });
-  },
-
-  handleChangeEnvVal: function (index, event) {
-    let env = _.map(this.state.env, _.clone);
-    env[index][2] = event.target.value;
-    this.setState({
-      env: env
-    });
-  },
-
-  handleAddEnvVar: function () {
-    let env = _.map(this.state.env, _.clone);
-    env.push([util.randomId(), '', '']);
-    this.setState({
-      env: env
-    });
-  },
-
-  handleRemoveEnvVar: function (index) {
-    let env = _.map(this.state.env, _.clone);
-    env.splice(index, 1);
-
-    if (env.length === 0) {
-      env.push([util.randomId(), '', '']);
-    }
-
-    this.setState({
-      env: env
-    });
-
   },
 
   handleDeleteContainer: function () {
@@ -210,48 +152,19 @@ var ContainerSettingsGeneral = React.createClass({
         </div>
 		<div className="container-info-row">
 		  <div className="label-id">COMMAND</div>
-		  <textarea rows="4" className="line disabled" disabled>{runCmd}</textarea>
+		  <textarea rows="8" className="line disabled" disabled>{runCmd}</textarea>
 		  <a className="btn btn-action btn-copy" onClick={() => this.handleCopyDockerRunCmd(runCmd)}>Copy</a>
 		  {runCmdCopiedToClipboard}
 		</div>
       </div>
     );
 
-    let vars = _.map(this.state.env, (kvp, index) => {
-      let [id, key, val] = kvp;
-      let icon;
-      if (index === this.state.env.length - 1) {
-        icon = <a onClick={this.handleAddEnvVar} className="only-icon btn btn-positive small"><span className="icon icon-add"></span></a>;
-      } else {
-        icon = <a onClick={this.handleRemoveEnvVar.bind(this, index)} className="only-icon btn btn-action small"><span className="icon icon-delete"></span></a>;
-      }
-
-      return (
-        <div key={id} className="keyval-row">
-          <input type="text" className="key line" defaultValue={key} onChange={this.handleChangeEnvKey.bind(this, index)}></input>
-          <input type="text" className="val line" defaultValue={val} onChange={this.handleChangeEnvVal.bind(this, index)}></input>
-          {icon}
-        </div>
-      );
-    });
 
     return (
       <div className="settings-panel">
         {containerInfo}
         <div className="settings-section">
-          <h3>Environment Variables</h3>
-          <div className="env-vars-labels">
-            <div className="label-key">KEY</div>
-            <div className="label-val">VALUE</div>
-          </div>
-          <div className="env-vars">
-            {vars}
-          </div>
-          <a className="btn btn-action" disabled={this.props.container.State.Updating} onClick={this.handleSaveEnvVars}>Save</a>
-        </div>
-        <div className="settings-section">
-          <h3>Delete Container</h3>
-          <a className="btn btn-action" onClick={this.handleDeleteContainer}>Delete Container</a>
+          <a className="btn btn-action" onClick={this.handleDeleteContainer}>Delete</a>
         </div>
       </div>
     );
