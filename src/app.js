@@ -44,7 +44,7 @@ webUtil.disableGlobalBackspace();
 var router = Router.create({
   routes: routes
 });
-router.run(Handler => ReactDOM.render(<Handler/>, document.body));
+router.run(Handler => ReactDOM.render(<Handler/>, document.getElementById('kitematic-root')));
 routerContainer.set(router);
 
 console.log(localStorage.getItem('settings.colorshema'));
