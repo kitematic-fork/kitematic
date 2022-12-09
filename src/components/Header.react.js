@@ -1,13 +1,10 @@
 import React from 'react/addons';
 import util from '../utils/Util';
-const electron = require('electron');
-const Menu = electron.Menu;
-const MenuItem = electron.MenuItem;
+import { getCurrentWindow, Menu, MenuItem } from '@electron/remote';
 import accountStore from '../stores/AccountStore';
 import accountActions from '../actions/AccountActions';
 import Router from 'react-router';
 import classNames from 'classnames';
-import { getCurrentWindow } from '@electron/remote';
 
 var Header = React.createClass({
   mixins: [Router.Navigation],
@@ -41,6 +38,36 @@ var Header = React.createClass({
       this.forceUpdate();
     }
   },
+  handleClose: function () {
+    if (util.isWindows() || util.isLinux()) {
+      getCurrentWindow().close();
+    } else {
+      getCurrentWindow().hide();
+    }
+  },
+  handleMinimize: function () {
+    getCurrentWindow().minimize();
+  },
+  handleFullscreen: function () {
+    if (util.isWindows()) {
+      if (getCurrentWindow().isMaximized()) {
+        getCurrentWindow().unmaximize();
+      } else {
+        getCurrentWindow().maximize();
+      }
+      this.setState({
+        fullscreen: getCurrentWindow().isMaximized()
+      });
+    } else {
+      getCurrentWindow().setFullScreen(!getCurrentWindow().isFullScreen());
+      this.setState({
+        fullscreen: getCurrentWindow().isFullScreen()
+      });
+    }
+  },
+  handleFullscreenHover: function () {
+    this.update();
+  },
   handleUserClick: function (e) {
     let menu = new Menu();
 
@@ -61,11 +88,32 @@ var Header = React.createClass({
     accountActions.verify();
   },
   renderLogo: function () {
-      return (
-          <div className="logo">
-            <img src="logo.png"/>
-          </div>
+    return (
+      <div className="logo">
+        <img src="logo.png"/>
+      </div>
+    );
+  },
+  renderWindowButtons: function () {
+    let buttons;
+    if (util.isWindows()) {
+      buttons = (
+        <div className="windows-buttons">
+        <div className="windows-button button-minimize enabled" onClick={this.handleMinimize}><div className="icon"></div></div>
+        <div className={`windows-button ${this.state.fullscreen ? 'button-fullscreenclose' : 'button-fullscreen'} enabled`} onClick={this.handleFullscreen}><div className="icon"></div></div>
+        <div className="windows-button button-close enabled" onClick={this.handleClose}></div>
+        </div>
       );
+    } else {
+      buttons = (
+        <div className="buttons">
+        <div className="button button-close enabled" onClick={this.handleClose}></div>
+        <div className="button button-minimize enabled" onClick={this.handleMinimize}></div>
+        <div className="button button-fullscreen enabled" onClick={this.handleFullscreen}></div>
+        </div>
+      );
+    }
+    return buttons;
   },
   renderDashboardHeader: function () {
     let headerClasses = classNames({
@@ -76,7 +124,7 @@ var Header = React.createClass({
     let username;
     if (this.props.hideLogin) {
       username = null;
-    } else if (this.state.username && !util.isWindows()) {
+    } else if (this.state.username) {
       username = (
         <div className="login-wrapper">
           <div className="login no-drag" onClick={this.handleUserClick}>
@@ -89,28 +137,25 @@ var Header = React.createClass({
           </div>
         </div>
       );
-    } else if(util.isWindows()){
+    } else {
       username = (
-          <div className="login no-drag" onClick={this.handleUserClick}>
-            <span className="icon icon-user"></span>
-              <span className="text">
-                {this.state.username}
-                {this.state.verified ? null : '(Unverified)'}
-              </span>
-            <img src="userdropdown.png"/>
+        <div className="login-wrapper">
+          <div className="login no-drag" onClick={this.handleLoginClick}>
+            <span className="icon icon-user"></span> LOGIN
           </div>
-      );
-    }else{
-      username = (
-          <div className="login-wrapper">
-            <div className="login no-drag" onClick={this.handleLoginClick}>
-              <span className="icon icon-user"></span> LOGIN
-            </div>
-          </div>
+        </div>
       );
     }
     return (
-      <div></div>
+      <div className={headerClasses}>
+        <div className="left-header">
+          {util.isWindows () ? this.renderLogo() : this.renderWindowButtons()}
+          {username}
+        </div>
+        <div className="right-header">
+          {util.isWindows () ? this.renderWindowButtons() : this.renderLogo()}
+        </div>
+      </div>
     );
   },
   renderBasicHeader: function () {
@@ -121,6 +166,12 @@ var Header = React.createClass({
     });
     return (
       <div className={headerClasses}>
+        <div className="left-header">
+          {util.isWindows () ? null : this.renderWindowButtons()}
+        </div>
+        <div className="right-header">
+          {util.isWindows () ? this.renderWindowButtons() : null}
+        </div>
       </div>
     );
   },

@@ -80,7 +80,8 @@ app.on('ready', function () {
       contextIsolation: false,
       spellcheck: false
     },
-    frame: true,
+    
+    frame: false,
     transparent: true,
     show: false
   });
