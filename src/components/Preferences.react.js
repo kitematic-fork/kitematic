@@ -84,7 +84,7 @@ var Preferences = React.createClass({
     localStorage.setItem('settings.startLinkedContainers', checked ? 'true' : 'false');
   },
   handleChangeLogsFontSize: function (e) {
-    var fontSize = event.target.value;
+    var fontSize = e.target.value;
     this.setState({
       logsFontSize: fontSize
     });
