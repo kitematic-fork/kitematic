@@ -70,9 +70,11 @@ var Preferences = React.createClass({
   handleColorShema: function (e) {
     var value = e.target.value;
     this.setState({
-      colorshema: value
+      colorShema: value
     });
     localStorage.setItem('settings.colorshema', value);
+
+    util.loadTheme(value);
   },
   handleChangeStartLinkedContainers: function (e) {
     var checked = e.target.checked;
@@ -184,10 +186,10 @@ var Preferences = React.createClass({
           </div>
           <div className="option">
             <div className="option-name">
-              <label htmlFor="colorShema">ColorShema</label>
+              <label htmlFor="colorShema">Theme</label>
             </div>
             <div className="option-value">
-              <select id="mode" value={this.state.colorshema} onChange={this.handleColorShema}>
+              <select id="mode" value={this.state.colorShema} onChange={this.handleColorShema}>
                 <option value="light">Light</option>
                 <option value="dark">Dark</option>
               </select>

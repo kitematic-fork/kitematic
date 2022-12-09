@@ -13,6 +13,7 @@ import Promise from 'bluebird';
 
 import webUtil from './utils/WebUtil';
 import hubUtil from './utils/HubUtil';
+import util from './utils/Util';
 import setupUtil from './utils/SetupUtil';
 import docker from './utils/DockerUtil';
 import hub from './utils/HubUtil';
@@ -48,11 +49,8 @@ routerContainer.set(router);
 
 console.log(localStorage.getItem('settings.colorshema'));
 
-var link = document.createElement( "link" );
-link.href = "main" + localStorage.getItem('settings.colorshema') + ".css";
-link.type = "text/css";
-link.rel = "stylesheet";
-document.getElementsByTagName( "head" )[0].appendChild( link );
+
+util.loadTheme(localStorage.getItem('settings.colorshema'))
 
 setupUtil.setup().then(() => {
   Menu.setApplicationMenu(Menu.buildFromTemplate(MenuFactory.buildMenu(os.platform())));

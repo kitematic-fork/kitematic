@@ -241,5 +241,17 @@ module.exports = {
     });
 
   },
+  loadTheme: function(theme) {
+    
+    var style = document.getElementsByTagName('link')[0];
+    style.parentNode.removeChild(style);
+    
+    var link = document.createElement("link");
+    link.href = "main" + theme + ".css";
+    link.type = "text/css";
+    link.rel = "stylesheet";
+    document.getElementsByTagName("head")[0].appendChild( link );
+    
+  },
   webPorts: ['80', '8000', '8080', '8888', '3000', '5000', '2368', '9200', '8983']
 };
