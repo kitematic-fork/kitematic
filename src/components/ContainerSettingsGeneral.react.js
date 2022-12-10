@@ -152,7 +152,7 @@ var ContainerSettingsGeneral = React.createClass({
         </div>
 		<div className="container-info-row">
 		  <div className="label-id">COMMAND</div>
-		  <textarea rows="8" className="line disabled" disabled>{runCmd}</textarea>
+		  <textarea rows="8" className="line disabled" value={runCmd} disabled></textarea>
 		  <a className="btn btn-action btn-copy" onClick={() => this.handleCopyDockerRunCmd(runCmd)}>Copy</a>
 		  {runCmdCopiedToClipboard}
 		</div>
