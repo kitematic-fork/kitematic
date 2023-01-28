@@ -5,7 +5,6 @@ import ContainerUtil from '../utils/ContainerUtil';
 import containerActions from '../actions/ContainerActions';
 import containerStore from '../stores/ContainerStore';
 import docker from '../utils/DockerUtil';
-import {webPorts} from '../utils/Util';
 import {DropdownButton, MenuItem} from 'react-bootstrap';
 
 var ContainerSettingsPorts = React.createClass({
